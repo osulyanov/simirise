@@ -1,0 +1,34 @@
+ru:
+  formtastic:
+    yes: Да
+    no: Нет
+    create: Создать %{model}
+    update: Обновить %{model}
+    submit: Отправить %{model}
+    cancel: Отменить %{model}
+    reset: Сбросить %{model}
+    required: обязательно для заполнения
+  activerecord:
+    models:
+      admin_user:
+        one: администратор
+        few: администратора
+        many: администраторов
+        other: Администраторы
+    attributes:
+      admin_user:
+        id: ID
+        email: E-mail
+        encrypted_password: Пароль в зашиврованном виде
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        name: Имя
+        remember_created_at: Запомнен
+        reset_password_sent_at: Сброшен
+        reset_password_token: Токен сброса
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        phone: Телефон
+        position: Должность
+        birth_date: Дата рождения

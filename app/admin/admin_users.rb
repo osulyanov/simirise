@@ -7,20 +7,25 @@ ActiveAdmin.register AdminUser do
     selectable_column
     id_column
     column :name
+    column :fb_link
+    column :phone
     column :email
-    column :created_at
+    column :position
     actions
   end
 
-  filter :name
-  filter :email
-  filter :created_at
+  config.filters = false
 
   form do |f|
     f.inputs do
-      f.semantic_errors(*f.object.errors.keys.select { |s| (s =~ /[\.]+/) == nil })
+      f.semantic_errors(*f.object.errors.keys)
       f.input :name
       f.input :email
+      f.input :phone
+      f.input :birth_date
+      f.input :fb_link
+      f.input :position
+      f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
       f.input :password
       f.input :password_confirmation
     end
