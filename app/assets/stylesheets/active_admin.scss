@@ -3,37 +3,12 @@
 @import "active_admin/base";
 @import "direct_uploads.css";
 
-li.has_many_container.colors {
-  display: none;
-}
+$pending-color: #FF9900;
+$rejected-color: #FF0000;
+$approved-color: #08A510;
 
-li.has_many_container.components li {
-  display: inline-block;
-}
-
-li.has_many_container.components li fieldset {
-  display: inline-block;
-}
-
-li.has_many_container.components ol > li.select {
-  width: 50%;
-}
-li.has_many_container.components ol > li.radio {
-  width: 30%;
-}
-li.has_many_container.components ol > li label {
-  display: inline-block;
-}
-li.has_many_container.components ol > li.boolean label {
-  width: auto;
-  padding-left: 0;
-}
-
-li.has_many_container.components ol > li.choice label {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-li.has_many_container.components ol > li.choice label input {
-  margin-right: 7px;
+.status_tag {
+  &.pending { background: $pending-color; }
+  &.rejected { background: $rejected-color; }
+  &.approved { background: $approved-color; }
 }

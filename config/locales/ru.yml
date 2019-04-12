@@ -15,6 +15,11 @@ ru:
         few: администратора
         many: администраторов
         other: Администраторы
+      user:
+        one: гость
+        few: гостя
+        many: гостей
+        other: Гости
     attributes:
       admin_user:
         id: ID
@@ -32,3 +37,19 @@ ru:
         phone: Телефон
         position: Должность
         birth_date: Дата рождения
+      user:
+        id: ID
+        email: E-mail
+        name: Имя
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        phone: Телефон
+        birth_date: Дата рождения
+        state: Статус
+        states:
+          pending: Ожидание
+          rejected: Отклонён
+          approved: Подтверждён
+        tags: Тэги
+        comment: Комментарий
