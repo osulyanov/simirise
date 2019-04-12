@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def reformat_errors_object(old)
     return old unless old
+
     new = {}
     old.each do |v|
       if v[0] == :error_code

@@ -151,8 +151,8 @@ module Resourceful
 
   def serializer
     "#{resource_instance_path}Serializer".classify.constantize
-  # rescue StandardError
-  #   nil
+    # rescue StandardError
+    #   nil
   end
 
   def safe_symbol(name)
