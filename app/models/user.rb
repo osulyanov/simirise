@@ -5,6 +5,10 @@ class User < ApplicationRecord
   enum state: { pending: 0, rejected: 1, approved: 2 }
 
   has_one_attached :photo
+
+  def self.tags
+    all.pluck(:tags).flat_map { |t| t&.split(',') }.uniq
+  end
 end
 
 # == Schema Information
@@ -19,6 +23,7 @@ end
 #  name       :string
 #  phone      :string
 #  state      :integer          default("pending"), not null
+#  tags       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
