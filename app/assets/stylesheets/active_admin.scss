@@ -12,3 +12,10 @@ $approved-color: #08A510;
   &.rejected { background: $rejected-color; }
   &.approved { background: $approved-color; }
 }
+
+#foto_sidebar_section tbody .row th {
+  display: none;
+}
+#foto_sidebar_section tbody .row td img {
+  width: 100%;
+}

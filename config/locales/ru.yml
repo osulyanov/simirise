@@ -38,6 +38,7 @@ ru:
         position: Должность
         birth_date: Дата рождения
         age: Возраст
+        photo: Фото
       user:
         id: ID
         email: E-mail
@@ -55,3 +56,4 @@ ru:
         tags: Тэги
         comment: Комментарий
         age: Возраст
+        photo: Фото

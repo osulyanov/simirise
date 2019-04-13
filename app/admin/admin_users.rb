@@ -8,7 +8,7 @@ ActiveAdmin.register AdminUser do
     id_column
     column :name
     column(:age) { |u| age(u.birth_date) }
-    column :fb_link
+    column(:fb_link) { |u| link_to u.fb_link, u.fb_link }
     column :phone
     column :email
     column :position
@@ -16,6 +16,25 @@ ActiveAdmin.register AdminUser do
   end
 
   config.filters = false
+
+  sidebar I18n.t('activerecord.attributes.admin_user.photo'), only: :show do
+    attributes_table_for admin_user do
+      row(' ') do |e|
+        link_to(image_tag(e.photo.variant(resize: '300x300>', auto_orient: true)), e.photo) if e.photo.attached?
+      end
+    end
+  end
+
+  show do
+    attributes_table title: I18n.t('activerecord.models.admin_user.one') do
+      row :name
+      row(:age) { |u| age(u.birth_date) }
+      row :phone
+      row(:fb_link) { |u| link_to u.fb_link, u.fb_link }
+      row :email
+      row :position
+    end
+  end
 
   form do |f|
     f.inputs do
