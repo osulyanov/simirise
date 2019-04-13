@@ -7,6 +7,7 @@ ActiveAdmin.register AdminUser do
     selectable_column
     id_column
     column :name
+    column(:age) { |u| age(u.birth_date) }
     column :fb_link
     column :phone
     column :email

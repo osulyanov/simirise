@@ -318,4 +318,5 @@ end
 
 module ActiveAdmin::ViewHelpers
   include EnumI18nHelper
+  include ApplicationHelper
 end

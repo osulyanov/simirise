@@ -7,6 +7,7 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :name
+    column(:age) { |u| age(u.birth_date) }
     column :fb_link
     column :phone
     column :email
@@ -14,7 +15,13 @@ ActiveAdmin.register User do
     actions
   end
 
-  config.filters = false
+  filter :name
+  filter :fb_link
+  filter :phone
+  filter :email
+  filter :state
+  filter :tags
+  filter :comment
 
   form do |f|
     f.inputs do

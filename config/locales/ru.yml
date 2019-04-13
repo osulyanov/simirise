@@ -37,6 +37,7 @@ ru:
         phone: Телефон
         position: Должность
         birth_date: Дата рождения
+        age: Возраст
       user:
         id: ID
         email: E-mail
@@ -53,3 +54,4 @@ ru:
           approved: Подтверждён
         tags: Тэги
         comment: Комментарий
+        age: Возраст
