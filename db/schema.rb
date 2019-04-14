@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_13_052334) do
+ActiveRecord::Schema.define(version: 2019_04_14_102725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,40 @@ ActiveRecord::Schema.define(version: 2019_04_13_052334) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.integer "timepad_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.string "description_short"
+    t.text "description_html"
+    t.string "coordinates"
+    t.string "fb_link"
+    t.text "conditions"
+    t.integer "access_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "line_ups", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "name"
+    t.string "timing"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_line_ups_on_event_id"
+  end
+
+  create_table "performances", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_performances_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|

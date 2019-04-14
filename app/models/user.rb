@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 class User < ApplicationRecord
   enum state: { pending: 0, rejected: 1, approved: 2 }
 

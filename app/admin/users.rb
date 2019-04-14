@@ -3,6 +3,11 @@
 ActiveAdmin.register User do
   menu priority: 1
 
+  scope :all, default: true
+  User.states.keys.each do |state|
+    scope(I18n.t("activerecord.attributes.user.states.#{state}")) { |scope| scope.where(state: state) }
+  end
+
   index do
     selectable_column
     id_column
@@ -40,6 +45,7 @@ ActiveAdmin.register User do
       row(:fb_link) { |u| link_to u.fb_link, u.fb_link }
       row :email
     end
+    # TODO: Tickets
     active_admin_comments
   end
 

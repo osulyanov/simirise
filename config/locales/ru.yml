@@ -20,6 +20,21 @@ ru:
         few: гостя
         many: гостей
         other: Гости
+      event:
+        one: мероприятие
+        few: мероприятия
+        many: мероприятий
+        other: Мероприятия
+      performance:
+        one: перфоманс
+        few: перфоманса
+        many: перфомансов
+        other: Перфомансы
+      line_up:
+        one: line up
+        few: line up
+        many: line up
+        other: Line Up
     attributes:
       admin_user:
         id: ID
@@ -57,3 +72,38 @@ ru:
         comment: Комментарий
         age: Возраст
         photo: Фото
+      event:
+        id: ID
+        name: Название
+        timepad_id: ID мероприятия в Timepad
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        starts_at: Дата начала события
+        ends_at: Дата окончания события
+        description_short: Краткое описание/подзаголовок события
+        description_html: Полное описание с html-тегами
+        coordinates: Широта и долгота для карт
+        conditions: Условия
+        access_status: Статус доступа к событию
+        access_statuses:
+          draft: Черновик
+          private: Закрытый
+          link_only: Только по ссылке
+          public: Открытый
+        poster_image: Картинка события
+        performances: Перфомансы
+        line_ups: Line Up
+      performance:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+      line_up:
+        id: ID
+        name: Имя диджея
+        timing: Временной интервал
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
