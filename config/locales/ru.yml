@@ -20,6 +20,11 @@ ru:
         few: гостя
         many: гостей
         other: Гости
+      tag:
+        one: тег
+        few: тега
+        many: тегов
+        other: Теги
       event:
         one: мероприятие
         few: мероприятия
@@ -69,6 +74,7 @@ ru:
           rejected: Отклонён
           approved: Подтверждён
         tags: Тэги
+        tag_ids: Тэги
         comment: Комментарий
         age: Возраст
         photo: Фото
@@ -107,3 +113,10 @@ ru:
         created_at: Создан
         updated_at: Изменён
         description: Описание
+      tag:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+        users: Отмеченные гости

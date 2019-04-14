@@ -58,7 +58,7 @@ ActiveAdmin.register User do
       f.input :birth_date
       f.input :fb_link
       f.input :state, collection: enum_options_for_select(User, :state)
-      f.input :tags, as: :tags, collection: User.tags
+      f.input :tag_ids, as: :tags, collection: Tag.all
       f.input :comment
       f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
     end
@@ -67,12 +67,12 @@ ActiveAdmin.register User do
 
   controller do
     def create
-      params[:user].delete('virtual_tags_attr')
+      params[:user].delete('virtual_tag_ids_attr')
       super
     end
 
     def update
-      params[:user].delete('virtual_tags_attr')
+      params[:user].delete('virtual_tag_ids_attr')
       super
     end
   end
