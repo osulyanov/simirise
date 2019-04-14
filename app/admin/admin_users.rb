@@ -46,6 +46,9 @@ ActiveAdmin.register AdminUser do
       f.input :fb_link
       f.input :position
       f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
+      f.inputs I18n.t('activerecord.attributes.admin_user.access') do
+        f.input :access, as: :check_boxes, collection: const_options_for_select(AdminUser, 'ACCESS_LEVELS')
+      end
       f.input :password
       f.input :password_confirmation
     end

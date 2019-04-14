@@ -59,6 +59,12 @@ ru:
         birth_date: Дата рождения
         age: Возраст
         photo: Фото
+        access: Права
+        access_levels:
+          user: База гостей
+          tag: Теги
+          event: Мероприятия
+          admin_user: Сотрудники
       user:
         id: ID
         email: E-mail

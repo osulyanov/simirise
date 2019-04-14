@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 
 module EnumI18nHelper
+  # Returns an array of the possible key/i18n values for the constant
+  # Example usage:
+  # enum_options_for_select(User, :ACCESS_LEVELS)
+  def const_options_for_select(class_name, const)
+    class_name.const_get(const).map do |key|
+      [const_i18n(class_name, const, key), key]
+    end
+  end
+
+  # Returns the i18n string for the const key
+  # Example usage:
+  # enum_i18n(User, :ACCESS_LEVELS, :admin_user)
+  def const_i18n(class_name, const, key)
+    I18n.t("activerecord.attributes.#{class_name.model_name.i18n_key}.#{const.downcase}.#{key}")
+  end
+
   # Returns an array of the possible key/i18n values for the enum
   # Example usage:
   # enum_options_for_select(User, :approval_state)
