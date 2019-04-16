@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+##  Local development
 
-Things you may want to cover:
+*   Start the server `docker-compose up`
 
-* Ruby version
+*   Prepare DB `docker-compose exec app rails db:create db:migrate db:seed`
 
-* System dependencies
+## Testing
 
-* Configuration
+*   Prepare DB `docker-compose exec app rails db:create db:migrate RAILS_ENV=test`
 
-* Database creation
+*   Run tests `docker-compose exec app bundle exec rspec spec/`
 
-* Database initialization
+## Production 
 
-* How to run the test suite
+* Create network `docker network create local`
 
-* Services (job queues, cache servers, search engines, etc.)
+* Run DB `docker run -d --rm --name postgres --network=local -v $(pwd)/postgresql/data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pgpasswd postgres:10.3-alpine`
 
-* Deployment instructions
+* Build App `docker build -t simirise -f Dockerfile.prod .`
 
-* ...
+* Run App `docker run -d --rm --name simirise --network=local -p 3000:3000 -v $(pwd)/simirise/log:/app/log -v $(pwd)/simirise/rails:/app/rails -e POSTGRES_PASSWORD=pgpasswd simirise`
