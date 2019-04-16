@@ -21,6 +21,8 @@ WORKDIR $RAILS_ROOT
 ENV RAILS_ENV production
 ENV RAILS_SERVE_STATIC_FILES true
 
+RUN echo "$MASTER_KEY" > config/master.key
+
 ADD Gemfile* ./
 RUN gem install bundler
 RUN gem update --system
