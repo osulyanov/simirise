@@ -52,15 +52,18 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.semantic_errors(*f.object.errors.keys)
+      f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
       f.input :name
       f.input :email
       f.input :phone
-      f.input :birth_date
+      f.input :birth_date, as: :date_time_picker, picker_options: { timepicker: false,
+                                                                    min_date: Date.today - 100.years,
+                                                                    max_date: Date.today - 16.years,
+                                                                    format: 'Y-m-d' }
       f.input :fb_link
       f.input :state, collection: enum_options_for_select(User, :state)
       f.input :tag_ids, as: :tags, collection: Tag.all
       f.input :comment
-      f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
     end
     f.actions
   end
