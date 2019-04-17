@@ -13,7 +13,7 @@ ActiveAdmin.register User do
     id_column
     column :name
     column(:age) { |u| age(u.birth_date) }
-    column(:fb_link) { |u| link_to u.fb_link, u.fb_link }
+    column(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
     column :phone
     column :email
     my_tag_column :state, interactive: true
@@ -42,7 +42,7 @@ ActiveAdmin.register User do
       row(:age) { |u| age(u.birth_date) }
       row :phone
       my_tag_row :state
-      row(:fb_link) { |u| link_to u.fb_link, u.fb_link }
+      row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
       row :email
     end
     # TODO: Tickets
