@@ -26,4 +26,4 @@ COPY . .
 
 EXPOSE 3000
 
-ENTRYPOINT ["bundle", "exec", "puma", "-C", "config/puma.dev.rb"]
+ENTRYPOINT ["bundle", "exec", "puma", "-C", "config/puma.rb"]

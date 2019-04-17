@@ -27,6 +27,7 @@ RUN gem update --system
 RUN bundle install --jobs 20 --retry 5 --without development test
 
 COPY . .
+RUN echo "cea0d2e1e7d86f4e919d22fd258cee4d" > config/master.key
 RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
