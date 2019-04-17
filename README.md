@@ -20,4 +20,4 @@
 
 * Build App `docker build -t simirise -f prod.Dockerfile .`
 
-* Run App `docker run -d --rm --name simirise --network=local -p 3000:3000 -v $(pwd)/simirise/log:/app/log -v $(pwd)/simirise/rails:/app/rails -e POSTGRES_PASSWORD=pgpasswd simirise`
+* Run App `docker run -d --rm --name simirise --network=local -p 3000:3000 -v $(pwd)/simirise/log:/app/log -v $(pwd)/simirise/rails:/app/rails -e POSTGRES_PASSWORD=pgpasswd simirise/backend`
