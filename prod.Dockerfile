@@ -28,6 +28,9 @@ RUN bundle install --jobs 20 --retry 5 --without development test
 
 COPY . .
 RUN echo $MASTER_KEY > config/master.key
+RUN $MASTER_KEY
+RUN ls -al config/
+RUN cat config/master.key
 RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
