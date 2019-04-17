@@ -21,14 +21,13 @@ WORKDIR $RAILS_ROOT
 ENV RAILS_ENV production
 ENV RAILS_SERVE_STATIC_FILES true
 
-RUN echo "$MASTER_KEY" > config/master.key
-
 ADD Gemfile* ./
 RUN gem install bundler
 RUN gem update --system
 RUN bundle install --jobs 20 --retry 5 --without development test
 
 COPY . .
+RUN echo $MASTER_KEY > config/master.key
 RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
