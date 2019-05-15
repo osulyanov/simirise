@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AdminUser < ApplicationRecord
-  ACCESS_LEVELS = %w[user tag event admin_user].freeze
+  ACCESS_LEVELS = %w[user tag event admin_user setting].freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
