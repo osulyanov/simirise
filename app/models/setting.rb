@@ -2,7 +2,7 @@
 
 
 class Setting < ApplicationRecord
-  store_accessor :data, :timepad_token
+  store_accessor :data, :timepad_token, :organization_id
 end
 
 # == Schema Information

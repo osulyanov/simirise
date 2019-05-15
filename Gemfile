@@ -10,6 +10,7 @@ gem 'activeadmin_addons', github: 'platanus/activeadmin_addons'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'cancancan', '~> 2.0'
 gem 'devise', '> 4.x'
+gem 'httparty'
 gem 'image_processing', '~> 1.2'
 gem 'mini_magick'
 gem 'pg', '>= 0.18', '< 2.0'

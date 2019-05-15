@@ -16,6 +16,7 @@ ActiveAdmin.register Setting do
     f.semantic_errors(*f.object.errors.keys)
     f.inputs do
       f.input :timepad_token
+      f.input :organization_id
     end
     f.actions do
       f.action :submit
