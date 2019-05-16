@@ -12,14 +12,13 @@ class Timepad
     @result = nil
   end
 
-  def events
-    # @options[:fields] = %i[location].join ','
-    # @options[:token] = Setting.first.timepad_token
-    # @options[:sip] = 0
-    # @options[:limit] = 100
-    # @options[:sort] = '+created_at'
-    @options['organization_ids'] = Setting.first.organization_id
-    # @options[:access_statuses] = %i[private draft link_only public].join ','
+  def events(query = {})
+    @options[:query] = query
+    @options[:query][:fields] = %i[ends_at location ticket_types questions access_status registration_data].join ','
+    @options[:query][:sort] = '+created_at'
+    @options[:query][:organization_ids] = Setting.first.organization_id
+    @options[:query][:access_statuses] = %i[private draft link_only public].join ','
+    @options[:query][:moderation_status] = %i[featured shown hidden not_moderated].join ','
     @result = self.class.get('/events', @options)
     self
   end
@@ -33,6 +32,6 @@ class Timepad
   end
 
   def default_options
-    {}
+    { headers: { Authorization: "Bearer #{Setting.first.timepad_token}" } }
   end
 end

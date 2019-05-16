@@ -2,6 +2,9 @@
 
 class Event < ApplicationRecord
   enum access_status: { draft: 0, private: 1, link_only: 2, public: 3 }, _suffix: '_status'
+  enum moderation_status: { not_moderated: 0, hidden: 1, shown: 2, featured: 3 }, _suffix: '_status'
+
+  store_accessor :location, :country, :city, :address, :coordinates
 
   has_one_attached :poster_image
 
@@ -15,7 +18,7 @@ class Event < ApplicationRecord
                                 reject_if: :all_blank
 
   def map_link
-    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=19" if coordinates.present?
+    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinatesjoin(','))}&z=19" if coordinates.present?
   end
 end
 
@@ -31,7 +34,10 @@ end
 #  description_short :string
 #  ends_at           :datetime
 #  fb_link           :string
+#  location          :jsonb            not null
+#  moderation_status :integer          default("not_moderated"), not null
 #  name              :string
+#  questions         :jsonb            not null
 #  starts_at         :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

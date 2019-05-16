@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 class Setting < ApplicationRecord
   store_accessor :data, :timepad_token, :organization_id
 end
