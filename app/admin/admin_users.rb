@@ -30,7 +30,7 @@ ActiveAdmin.register AdminUser do
       row :name
       row(:age) { |u| age(u.birth_date) }
       row :phone
-      row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present?}
+      row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
       row :email
       row :position
     end

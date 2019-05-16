@@ -18,7 +18,7 @@ class Event < ApplicationRecord
                                 reject_if: :all_blank
 
   def map_link
-    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinatesjoin(','))}&z=19" if coordinates.present?
+    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=19" if coordinates.present?
   end
 end
 

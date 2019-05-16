@@ -12,10 +12,14 @@ ActiveAdmin.register Event do
     selectable_column
     id_column
     column :name
-    column(:dates) { |e| "#{l e.starts_at, format: :short}—#{l e.ends_at, format: :short}" }
-    column(:tickets_sold) { |u| 0 } # TODO
-    column(:summ) { |u| 0 } # TODO
-    column(:guests) { |u| 'LINK' } # TODO
+    column(:dates) do |e|
+      "#{l e.starts_at, format: :short if e.starts_at}" \
+      "#{'—' if e.ends_at}" \
+      "#{l e.ends_at, format: :short if e.ends_at}"
+    end
+    column(:tickets_sold) { |_u| 0 } # TODO
+    column(:summ) { |_u| 0 } # TODO
+    column(:guests) { |_u| 'LINK' } # TODO
     actions
   end
 

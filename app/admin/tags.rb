@@ -9,7 +9,7 @@ ActiveAdmin.register Tag do
     column :name
     column :description
     column(:users) do |t|
-      link_to t.users.count, admin_users_path(q: { tags_id_eq: t.id } )
+      link_to t.users.count, admin_users_path(q: { tags_id_eq: t.id })
     end
     actions
   end

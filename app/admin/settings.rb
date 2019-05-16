@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Setting do
   menu priority: 30,
        url: proc { edit_admin_setting_path(Setting.first) }

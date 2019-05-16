@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :import do
   task events: :environment do
     timepad = Timepad.new
@@ -9,7 +11,7 @@ namespace :import do
       event.name = te['name']
       event.country = te['location']['country']
       event.city = te['location']['city']
-      event.coordinates = te['location']['coordinates']
+      event.coordinates = te['location']['coordinates'].join(',')
       event.questions = te['questions']
       event.moderation_status = te['moderation_status']
       event.access_status = te['access_status']

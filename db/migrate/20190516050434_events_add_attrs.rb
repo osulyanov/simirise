@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EventsAddAttrs < ActiveRecord::Migration[5.2]
   def change
     add_column :events, :location, :jsonb, null: false, default: {}
