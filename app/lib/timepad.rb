@@ -93,6 +93,12 @@ class Timepad
   # "_links"=>{}
   # }
 
+  def create_order(event_id, query = {})
+    @options[:query] = query
+    @result = self.class.post("/events/#{event_id}/orders", @options)
+    self
+  end
+
   def success?
     @result.code == 200
   end
