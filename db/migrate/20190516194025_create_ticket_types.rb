@@ -1,25 +1,25 @@
 class CreateTicketTypes < ActiveRecord::Migration[5.2]
   def change
     create_table :ticket_types do |t|
-      t.integer timepad_id,
-t. :name"=>"Single Ticket",
-t. :description"=>"Early bird",
-t. :buy_amount_min"=>1,
-t. :buy_amount_max"=>30,
-t. :price"=>2220,
-t. :is_promocode_locked"=>false,
-t. :remaining"=>1806,
-t. :sale_ends_at"=>"2019-04-03T23:59:00+0300",
-t. :sale_starts_at"=>"2019-04-03T00:00:00+0300",
-t. :public_key"=>"-----BEGIN PUBLIC KEY-----\r\nMDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAJPtKGjKjX0RLc2mGqLiF+MU0HJ99aie\r\nZFZn+iBhEgNnAgMBAAE=\r\n-----END PUBLIC KEY-----",
-t. :is_active"=>true,
-t. :ad_partner_profit"=>0,
-t. :send_personal_links"=>true,
-t. :sold"=>0,
-t. :attended"=>0,
-t. :limit"=>2000,
-t. :status"=>"late"
-
+      t.integer :timepad_id
+      t.references :event, index: true
+      t.string :name
+      t.string :description
+      t.integer :buy_amount_min
+      t.integer :buy_amount_max
+      t.integer :price
+      t.boolean :is_promocode_locked
+      t.integer :remaining
+      t.datetime :sale_ends_at
+      t.datetime :sale_starts_at
+      t.string :public_key
+      t.boolean :is_active
+      t.integer :ad_partner_profit
+      t.boolean :send_personal_links
+      t.integer :sold
+      t.integer :attended
+      t.integer :limit
+      t.string :status
       t.timestamps
     end
   end

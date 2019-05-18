@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_16_050434) do
+ActiveRecord::Schema.define(version: 2019_05_16_194025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,31 @@ ActiveRecord::Schema.define(version: 2019_05_16_050434) do
   create_table "tags_users", id: false, force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "user_id", null: false
+  end
+
+  create_table "ticket_types", force: :cascade do |t|
+    t.integer "timepad_id"
+    t.bigint "event_id"
+    t.string "name"
+    t.string "description"
+    t.integer "buy_amount_min"
+    t.integer "buy_amount_max"
+    t.integer "price"
+    t.boolean "is_promocode_locked"
+    t.integer "remaining"
+    t.datetime "sale_ends_at"
+    t.datetime "sale_starts_at"
+    t.string "public_key"
+    t.boolean "is_active"
+    t.integer "ad_partner_profit"
+    t.boolean "send_personal_links"
+    t.integer "sold"
+    t.integer "attended"
+    t.integer "limit"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_ticket_types_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|

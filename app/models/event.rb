@@ -8,6 +8,7 @@ class Event < ApplicationRecord
 
   has_one_attached :poster_image
 
+  has_many :ticket_types, dependent: :destroy
   has_many :performances, dependent: :destroy
   accepts_nested_attributes_for :performances,
                                 allow_destroy: true,

@@ -3,6 +3,8 @@
 ActiveAdmin.register Event do
   menu priority: 4
 
+  actions :edit, :update, :delete
+
   scope :all, default: true
   Event.access_statuses.keys.each do |status|
     scope(I18n.t("activerecord.attributes.event.access_statuses.#{status}")) { |scope| scope.where(access_status: status) }
