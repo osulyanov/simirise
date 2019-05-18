@@ -134,3 +134,4 @@ ru:
         users: Отмеченные гости
       setting:
         timepad_token: Токен Timepad
+        organization_id: ID организации на Timapad
