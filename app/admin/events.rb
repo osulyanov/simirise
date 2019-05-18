@@ -5,6 +5,8 @@ ActiveAdmin.register Event do
 
   actions :index, :show, :edit, :update, :delete
 
+  config.sort_order = 'starts_at_desc'
+
   scope :all, default: true
   Event.access_statuses.keys.each do |status|
     scope(I18n.t("activerecord.attributes.event.access_statuses.#{status}")) { |scope| scope.where(access_status: status) }
@@ -15,11 +17,11 @@ ActiveAdmin.register Event do
     id_column
     column :name
     column(:dates) do |e|
-      "#{l e.starts_at, format: :short if e.starts_at}" \
+      "#{l e.starts_at, format: :long if e.starts_at}" \
       "#{'—' if e.ends_at}" \
-      "#{l e.ends_at, format: :short if e.ends_at}"
+      "#{l e.ends_at, format: :long if e.ends_at}"
     end
-    column(:tickets_sold) { |_u| 0 } # TODO
+    column(:tickets_sold) { |e| e.tickets.size }
     column(:summ) { |_u| 0 } # TODO
     column(:guests) { |_u| 'LINK' } # TODO
     actions

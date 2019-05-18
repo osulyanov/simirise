@@ -10,6 +10,7 @@ end
 # Table name: orders
 #
 #  id         :bigint(8)        not null, primary key
+#  answers    :jsonb
 #  mail       :string
 #  meta       :jsonb
 #  payment    :jsonb

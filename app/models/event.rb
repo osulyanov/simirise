@@ -20,6 +20,12 @@ class Event < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: :all_blank
 
+  scope :future, -> do
+    where '(starts_at >= :starts AND ends_at IS NULL) OR (starts_at >= :starts AND ends_at >= :ends)',
+          starts: Date.today.end_of_day,
+          ends: Date.today.end_of_day
+  end
+
   def map_link
     "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=19" if coordinates.present?
   end

@@ -15,9 +15,9 @@ class Timepad
   def events(query = {})
     @options[:query] = query
     @options[:query][:fields] = %i[ends_at location ticket_types questions access_status registration_data].join ','
-    @options[:query][:sort] = '-created_at'
+    @options[:query][:sort] = '-starts'
     @options[:query][:limit] = 100
-    @options[:query][:starts_at_min] = '2017-06-16T00:00:00+0300'
+    # @options[:query][:starts_at_min] = '2017-06-16T00:00:00+0300'
     @options[:query][:organization_ids] = Setting.first.organization_id
     @options[:query][:access_statuses] = %i[private draft link_only public].join ','
     @options[:query][:moderation_status] = %i[featured shown hidden not_moderated].join ','
@@ -28,6 +28,7 @@ class Timepad
   def orders(event_id, query = {})
     @options[:query] = query
     @options[:query][:sort] = '+created_at'
+    @options[:query][:limit] = 250
     @result = self.class.get("/events/#{event_id}/orders", @options)
     self
   end
