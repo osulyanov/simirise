@@ -3,7 +3,7 @@
 ActiveAdmin.register Event do
   menu priority: 4
 
-  actions :edit, :update, :delete
+  actions :index, :show, :edit, :update, :delete
 
   scope :all, default: true
   Event.access_statuses.keys.each do |status|
