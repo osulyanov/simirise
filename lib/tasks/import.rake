@@ -31,7 +31,7 @@ namespace :import do
         timepad_orders = timepad_res&.dig('values') || []
         total = timepad_res&.dig('total') || 0
         processed += timepad_orders.size
-        timepad_orders.each do |te|
+        timepad_orders.each do |to|
           order = event.orders.find_or_initialize_by(timepad_id: to.delete('id'))
           to.each { |k, v| order.assign_attributes :"#{k}" => v }
           order.save!
