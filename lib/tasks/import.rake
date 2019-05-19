@@ -28,10 +28,10 @@ namespace :import do
       processed = 0
       total = 0
       loop do
-        puts "orders #{processed}-#{processed + 250} of #{total}"
-        timepad_res = timepad.orders(event.timepad_id)&.result
+        timepad_res = timepad.orders(event.timepad_id, skip: processed)&.result
         timepad_orders = timepad_res&.dig('values') || []
         total = timepad_res&.dig('total') || 0
+        puts "orders #{processed}-#{processed + 250} of #{total}"
         processed += timepad_orders.size
         timepad_orders.each do |to|
           order = event.orders.find_or_initialize_by(timepad_id: to.delete('id'))
@@ -50,6 +50,20 @@ namespace :import do
         end
         break unless total > processed
       end
+    end
+  end
+
+  task users: :environment do
+    path = Rails.root.join('db', 'seed_data', 'users.csv')
+    file = File.read(path)
+    users = CSV.parse(file, headers: true, col_sep: ';')
+    users.each do |row|
+      data = row.to_hash
+      user = User.find_or_initialize_by(email: data['E-mail'])
+      user.assign_attributes(name: [data['Имя'], data['Фамилия']].join(' '),
+                             phone: data['Телефон'],
+                             state: :approved)
+      user.save!
     end
   end
 end

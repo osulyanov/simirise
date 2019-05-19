@@ -92,7 +92,7 @@ ru:
         photo: Фото
       event:
         id: ID
-        name: Название
+        name: Название мероприятия
         timepad_id: ID мероприятия в Timepad
         created_at: Создан
         updated_at: Изменён
@@ -112,6 +112,10 @@ ru:
         poster_image: Картинка события
         performances: Перфомансы
         line_ups: Line Up
+        dates: Даты проведения
+        tickets_sold: Куплено
+        summ: Сумма
+        guests: Посмотреть гостей
       performance:
         id: ID
         name: Название
