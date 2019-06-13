@@ -16,8 +16,8 @@
 
 * Create network `docker network create local`
 
-* Run DB `docker run -d --rm --name postgres --network=local -v $(pwd)/postgresql/data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pgpasswd postgres:10.3-alpine`
+* Run DB `docker run -d --restart=unless-stopped --name postgres --network=local -v $(pwd)/postgresql/data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pgpasswd postgres:10.3-alpine`
 
 * Build App `docker build -t simirise -f prod.Dockerfile .`
 
-* Run App `docker run -d --rm --name simirise --network=local -p 3000:3000 -v $(pwd)/simirise/log:/app/log -v $(pwd)/simirise/rails:/app/rails -e POSTGRES_PASSWORD=pgpasswd simirise/backend`
+* Run App `docker run -d --restart=unless-stopped --name simirise --network=local -p 3000:3000 -v $(pwd)/simirise/log:/app/log -v $(pwd)/simirise/rails:/app/rails -e POSTGRES_PASSWORD=pgpasswd simirise/backend`
