@@ -7,3 +7,5 @@ unless AdminUser.any?
                     password: 'rCJ9w>r}&kMev83',
                     password_confirmation: 'rCJ9w>r}&kMev83')
 end
+
+Setting.create!(data: {}) unless Setting.any?

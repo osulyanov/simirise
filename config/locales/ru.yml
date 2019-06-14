@@ -40,6 +40,11 @@ ru:
         few: line up
         many: line up
         other: Line Up
+      setting:
+        one: настройки
+        few: настройки
+        many: настройки
+        other: Настройки
     attributes:
       admin_user:
         id: ID
@@ -65,6 +70,7 @@ ru:
           tag: Теги
           event: Мероприятия
           admin_user: Сотрудники
+          setting: Настройки
       user:
         id: ID
         email: E-mail
@@ -86,7 +92,7 @@ ru:
         photo: Фото
       event:
         id: ID
-        name: Название
+        name: Название мероприятия
         timepad_id: ID мероприятия в Timepad
         created_at: Создан
         updated_at: Изменён
@@ -106,6 +112,10 @@ ru:
         poster_image: Картинка события
         performances: Перфомансы
         line_ups: Line Up
+        dates: Даты проведения
+        tickets_sold: Куплено
+        summ: Сумма
+        guests: Посмотреть гостей
       performance:
         id: ID
         name: Название
@@ -126,3 +136,6 @@ ru:
         updated_at: Изменён
         description: Описание
         users: Отмеченные гости
+      setting:
+        timepad_token: Токен Timepad
+        organization_id: ID организации на Timapad
