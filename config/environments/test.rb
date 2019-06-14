@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  Rails.application.routes.default_url_options = { host: '0.0.0.0:3000' }
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

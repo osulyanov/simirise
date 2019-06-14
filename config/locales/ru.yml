@@ -1,0 +1,141 @@
+ru:
+  formtastic:
+    yes: Да
+    no: Нет
+    create: Создать %{model}
+    update: Обновить %{model}
+    submit: Отправить %{model}
+    cancel: Отменить %{model}
+    reset: Сбросить %{model}
+    required: обязательно для заполнения
+  activerecord:
+    models:
+      admin_user:
+        one: администратор
+        few: администратора
+        many: администраторов
+        other: Администраторы
+      user:
+        one: гость
+        few: гостя
+        many: гостей
+        other: Гости
+      tag:
+        one: тег
+        few: тега
+        many: тегов
+        other: Теги
+      event:
+        one: мероприятие
+        few: мероприятия
+        many: мероприятий
+        other: Мероприятия
+      performance:
+        one: перфоманс
+        few: перфоманса
+        many: перфомансов
+        other: Перфомансы
+      line_up:
+        one: line up
+        few: line up
+        many: line up
+        other: Line Up
+      setting:
+        one: настройки
+        few: настройки
+        many: настройки
+        other: Настройки
+    attributes:
+      admin_user:
+        id: ID
+        email: E-mail
+        encrypted_password: Пароль в зашиврованном виде
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        name: Имя
+        remember_created_at: Запомнен
+        reset_password_sent_at: Сброшен
+        reset_password_token: Токен сброса
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        phone: Телефон
+        position: Должность
+        birth_date: Дата рождения
+        age: Возраст
+        photo: Фото
+        access: Права
+        access_levels:
+          user: База гостей
+          tag: Теги
+          event: Мероприятия
+          admin_user: Сотрудники
+          setting: Настройки
+      user:
+        id: ID
+        email: E-mail
+        name: Имя
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        phone: Телефон
+        birth_date: Дата рождения
+        state: Статус
+        states:
+          pending: Ожидание
+          rejected: Отклонён
+          approved: Подтверждён
+        tags: Тэги
+        tag_ids: Тэги
+        comment: Комментарий
+        age: Возраст
+        photo: Фото
+      event:
+        id: ID
+        name: Название мероприятия
+        timepad_id: ID мероприятия в Timepad
+        created_at: Создан
+        updated_at: Изменён
+        fb_link: Ссылка на FB
+        starts_at: Дата начала события
+        ends_at: Дата окончания события
+        description_short: Краткое описание/подзаголовок события
+        description_html: Полное описание с html-тегами
+        coordinates: Широта и долгота для карт
+        conditions: Условия
+        access_status: Статус доступа к событию
+        access_statuses:
+          draft: Черновик
+          private: Закрытый
+          link_only: Только по ссылке
+          public: Открытый
+        poster_image: Картинка события
+        performances: Перфомансы
+        line_ups: Line Up
+        dates: Даты проведения
+        tickets_sold: Куплено
+        summ: Сумма
+        guests: Посмотреть гостей
+      performance:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+      line_up:
+        id: ID
+        name: Имя диджея
+        timing: Временной интервал
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+      tag:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+        users: Отмеченные гости
+      setting:
+        timepad_token: Токен Timepad
+        organization_id: ID организации на Timapad

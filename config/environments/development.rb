@@ -1,5 +1,15 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.action_mailer.delivery_method = :letter_opener
+
+  Rails.application.routes.default_url_options = { host: '0.0.0.0:3000' }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.rails_logger = true
+  end
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
