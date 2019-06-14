@@ -22,8 +22,8 @@ ActiveAdmin.register Event do
       "#{l e.ends_at, format: :long if e.ends_at}"
     end
     column(:tickets_sold) { |e| e.tickets.size }
-    column(:summ) { |_u| 0 } # TODO
-    column(:guests) { |_u| 'LINK' } # TODO
+    # column(:summ) { |_u| 0 } # TODO
+    # column(:guests) { |_u| 'LINK' } # TODO
     actions
   end
 
