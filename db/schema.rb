@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_14_111338) do
+ActiveRecord::Schema.define(version: 2019_05_18_194342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 2019_04_14_111338) do
     t.integer "access_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "location", default: {}, null: false
+    t.jsonb "questions", default: [], null: false
+    t.integer "moderation_status", default: 0, null: false
   end
 
   create_table "line_ups", force: :cascade do |t|
@@ -93,6 +96,21 @@ ActiveRecord::Schema.define(version: 2019_04_14_111338) do
     t.index ["event_id"], name: "index_line_ups_on_event_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.bigint "event_id"
+    t.integer "timepad_id"
+    t.jsonb "status"
+    t.string "mail"
+    t.jsonb "payment"
+    t.string "promocodes", default: [], array: true
+    t.jsonb "referrer"
+    t.jsonb "meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "answers"
+    t.index ["event_id"], name: "index_orders_on_event_id"
+  end
+
   create_table "performances", force: :cascade do |t|
     t.bigint "event_id"
     t.string "name"
@@ -100,6 +118,12 @@ ActiveRecord::Schema.define(version: 2019_04_14_111338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_performances_on_event_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -112,6 +136,52 @@ ActiveRecord::Schema.define(version: 2019_04_14_111338) do
   create_table "tags_users", id: false, force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "user_id", null: false
+  end
+
+  create_table "ticket_types", force: :cascade do |t|
+    t.integer "timepad_id"
+    t.bigint "event_id"
+    t.string "name"
+    t.string "description"
+    t.integer "buy_amount_min"
+    t.integer "buy_amount_max"
+    t.integer "price"
+    t.boolean "is_promocode_locked"
+    t.integer "remaining"
+    t.datetime "sale_ends_at"
+    t.datetime "sale_starts_at"
+    t.string "public_key"
+    t.boolean "is_active"
+    t.integer "ad_partner_profit"
+    t.boolean "send_personal_links"
+    t.integer "sold"
+    t.integer "attended"
+    t.integer "limit"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_ticket_types_on_event_id"
+  end
+
+  create_table "ticket_types_tickets", id: false, force: :cascade do |t|
+    t.bigint "ticket_type_id", null: false
+    t.bigint "ticket_id", null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "ticket_type_id"
+    t.integer "timepad_id"
+    t.string "number"
+    t.integer "price_nominal"
+    t.jsonb "answers"
+    t.jsonb "attendance"
+    t.jsonb "place"
+    t.jsonb "codes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_tickets_on_order_id"
+    t.index ["ticket_type_id"], name: "index_tickets_on_ticket_type_id"
   end
 
   create_table "users", force: :cascade do |t|
