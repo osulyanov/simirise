@@ -45,6 +45,11 @@ ru:
         few: настройки
         many: настройки
         other: Настройки
+      ticket_type:
+        one: тип билета
+        few: типа билеты
+        many: типов билетов
+        other: Типы билетов
     attributes:
       admin_user:
         id: ID
@@ -139,3 +144,27 @@ ru:
       setting:
         timepad_token: Токен Timepad
         organization_id: ID организации на Timapad
+      ticket_type:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+        ad_partner_profit:
+        attended:
+        buy_amount_max:
+        buy_amount_min:
+        is_active: Активен
+        is_promocode_locked:
+        limit: Лимит
+        price: Цена
+        public_key:
+        remaining: Осталось
+        sale_ends_at:
+        sale_starts_at:
+        send_personal_links:
+        sold:
+        status: Статус
+        event: Событие
+        event_id: Событие
+        timepad_id: ID в TimePad

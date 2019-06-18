@@ -64,7 +64,22 @@ ActiveAdmin.register Event do
         nil
       end
     end
-    # TODO: Tickets
+
+    panel I18n.t('activerecord.models.ticket_type.other') do
+      table_for event.ticket_types do
+        column :id
+        column :is_active
+        column :status
+        column :name
+        column :price
+        column('Доступно') { |tt| "#{tt.remaining} / #{tt.limit}" }
+        column 'Даты продажи' do |tt|
+          text_node "С&nbsp;#{l tt.sale_starts_at, format: :long}".html_safe if tt.sale_starts_at
+          text_node "&nbsp;".html_safe
+          text_node "До&nbsp;#{l tt.sale_ends_at, format: :long}".html_safe if tt.sale_ends_at
+        end
+      end
+    end
   end
 
   form do |f|
