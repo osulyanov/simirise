@@ -39,20 +39,21 @@ end
 #
 # Table name: events
 #
-#  id                :bigint(8)        not null, primary key
-#  access_status     :integer          default("draft"), not null
-#  conditions        :text
-#  coordinates       :string
-#  description_html  :text
-#  description_short :string
-#  ends_at           :datetime
-#  fb_link           :string
-#  location          :jsonb            not null
-#  moderation_status :integer          default("not_moderated"), not null
-#  name              :string
-#  questions         :jsonb            not null
-#  starts_at         :datetime
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  timepad_id        :integer
+#  id                  :bigint(8)        not null, primary key
+#  access_status       :integer          default("draft"), not null
+#  conditions          :text
+#  coordinates         :string
+#  description_html    :text
+#  description_short   :string
+#  ends_at             :datetime
+#  fb_link             :string
+#  location            :jsonb            not null
+#  moderation_status   :integer          default("not_moderated"), not null
+#  name                :string
+#  questions           :jsonb            not null
+#  starts_at           :datetime
+#  timepad_description :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  timepad_id          :integer
 #

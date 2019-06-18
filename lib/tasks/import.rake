@@ -9,8 +9,10 @@ namespace :import do
       %w[starts_at ends_at name questions moderation_status access_status].each do |k|
         event.assign_attributes :"#{k}" => te[k]
       end
+      event.timepad_description = te['description_html']
       event.country = te['location']['country']
       event.city = te['location']['city']
+      event.address = te['location']['address']
       event.coordinates = te['location']['coordinates'].reverse.join(',')
       event.save!
       te['ticket_types'].each do |tt|

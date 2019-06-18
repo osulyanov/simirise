@@ -44,6 +44,7 @@ ActiveAdmin.register Event do
   show do
     attributes_table title: I18n.t('activerecord.models.event.one') do
       row :name
+      row(:timepad_description) { |e| e.timepad_description.html_safe }
       row(:performances) do |e|
         e.performances.each do |p|
           div b p.name

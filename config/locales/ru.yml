@@ -99,6 +99,7 @@ ru:
         id: ID
         name: Название мероприятия
         timepad_id: ID мероприятия в Timepad
+        timepad_description: Описание из Timepad
         created_at: Создан
         updated_at: Изменён
         fb_link: Ссылка на FB
@@ -167,4 +168,4 @@ ru:
         status: Статус
         event: Событие
         event_id: Событие
-        timepad_id: ID в TimePad
+        timepad_id: ID в Timepad

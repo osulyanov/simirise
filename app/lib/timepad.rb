@@ -14,7 +14,7 @@ class Timepad
 
   def events(query = {})
     @options[:query] = query
-    @options[:query][:fields] = %i[ends_at location ticket_types questions access_status registration_data].join ','
+    @options[:query][:fields] = %i[ends_at location ticket_types questions access_status registration_data description_html].join ','
     @options[:query][:sort] = '-starts'
     @options[:query][:limit] = 100
     @options[:query][:starts_at_min] = '2017-06-16T00:00:00+0300'

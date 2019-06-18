@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_18_194342) do
+ActiveRecord::Schema.define(version: 2019_06_18_200814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_05_18_194342) do
     t.jsonb "location", default: {}, null: false
     t.jsonb "questions", default: [], null: false
     t.integer "moderation_status", default: 0, null: false
+    t.text "timepad_description"
   end
 
   create_table "line_ups", force: :cascade do |t|
