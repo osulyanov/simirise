@@ -37,7 +37,7 @@ ActiveAdmin.register Event do
       row :description_short
       row :description_html
       row(:fb_link) { |e| link_to e.fb_link, e.fb_link }
-      row(:map_link) { |e| link_to('Карта', e.map_link, target: '_blank') if e.map_link }
+      row(:map_link) { |e| link_to(e.full_address, e.map_link, target: '_blank') if e.map_link }
     end
   end
 

@@ -26,8 +26,12 @@ class Event < ApplicationRecord
           ends: Date.today.end_of_day
   end
 
+  def full_address
+    [city, address].select(&:present?).join ', ' || 'Карта'
+  end
+
   def map_link
-    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=19" if coordinates.present?
+    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=15" if coordinates.present?
   end
 end
 

@@ -11,7 +11,7 @@ namespace :import do
       end
       event.country = te['location']['country']
       event.city = te['location']['city']
-      event.coordinates = te['location']['coordinates'].join(',')
+      event.coordinates = te['location']['coordinates'].reverse.join(',')
       event.save!
       te['ticket_types'].each do |tt|
         ticket_type = event.ticket_types.find_or_initialize_by(timepad_id: tt.delete('id'))
