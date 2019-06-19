@@ -21,8 +21,8 @@ class Event < ApplicationRecord
                                 reject_if: :all_blank
 
   scope :future, -> do
-    where '(starts_at >= :starts AND ends_at IS NULL) OR (starts_at >= :starts AND ends_at >= :ends)',
-          starts: Date.today.end_of_day,
+    where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
+          starts: Date.today.beginning_of_day,
           ends: Date.today.end_of_day
   end
 

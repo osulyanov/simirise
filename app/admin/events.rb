@@ -8,7 +8,7 @@ ActiveAdmin.register Event do
   config.sort_order = 'starts_at_desc'
 
   scope :all, default: true
-  scope('Текущие') { |scope| scope.where('events.ends_at >= ?', Date.today) }
+  scope('Текущие', &:future)
   scope('Прошедшие') { |scope| scope.where('events.ends_at < ?', Date.today) }
 
   index do
@@ -75,7 +75,7 @@ ActiveAdmin.register Event do
         column('Доступно') { |tt| "#{tt.remaining} / #{tt.limit}" }
         column 'Даты продажи' do |tt|
           text_node "С&nbsp;#{l tt.sale_starts_at, format: :long}".html_safe if tt.sale_starts_at
-          text_node "&nbsp;".html_safe
+          text_node '&nbsp;'.html_safe
           text_node "До&nbsp;#{l tt.sale_ends_at, format: :long}".html_safe if tt.sale_ends_at
         end
       end
