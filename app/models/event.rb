@@ -11,6 +11,8 @@ class Event < ApplicationRecord
   has_many :ticket_types, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :tickets, through: :orders
+  has_many :paid_orders, -> { paid }, class_name: 'Order'
+  has_many :paid_tickets, through: :paid_orders, class_name: 'Ticket', source: :tickets
   has_many :performances, dependent: :destroy
   accepts_nested_attributes_for :performances,
                                 allow_destroy: true,

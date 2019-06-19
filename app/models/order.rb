@@ -3,6 +3,8 @@
 class Order < ApplicationRecord
   belongs_to :event
   has_many :tickets, dependent: :destroy
+
+  scope :paid, -> { where("status ->> 'name' = ?", 'paid').or(where("status ->> 'name' = ?", 'ok')) }
 end
 
 # == Schema Information

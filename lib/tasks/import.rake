@@ -24,8 +24,30 @@ namespace :import do
   end
 
   task orders: :environment do
+    import_orders(Event.future)
+  end
+
+  task all_orders: :environment do
+    import_orders(Event.all)
+  end
+
+  task users: :environment do
+    path = Rails.root.join('db', 'seed_data', 'users.csv')
+    file = File.read(path)
+    users = CSV.parse(file, headers: true, col_sep: ';')
+    users.each do |row|
+      data = row.to_hash
+      user = User.find_or_initialize_by(email: data['E-mail'])
+      user.assign_attributes(name: [data['Имя'], data['Фамилия']].join(' '),
+                             phone: data['Телефон'],
+                             state: :approved)
+      user.save!
+    end
+  end
+
+  def import_orders(events)
     timepad = Timepad.new
-    Event.future.find_each do |event|
+    events.find_each do |event|
       puts "import #{event.name}"
       processed = 0
       total = 0
@@ -52,20 +74,6 @@ namespace :import do
         end
         break unless total > processed
       end
-    end
-  end
-
-  task users: :environment do
-    path = Rails.root.join('db', 'seed_data', 'users.csv')
-    file = File.read(path)
-    users = CSV.parse(file, headers: true, col_sep: ';')
-    users.each do |row|
-      data = row.to_hash
-      user = User.find_or_initialize_by(email: data['E-mail'])
-      user.assign_attributes(name: [data['Имя'], data['Фамилия']].join(' '),
-                             phone: data['Телефон'],
-                             state: :approved)
-      user.save!
     end
   end
 end

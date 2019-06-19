@@ -12,11 +12,12 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :name
-    column(:age) { |u| age(u.birth_date) }
     column(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
     column :phone
     column :email
     my_tag_column :state, interactive: true
+    column(:tags) { |u| u.tags.map(&:name).join(', ') }
+    # column('Количество билетов') { |u| Order.where(mail: u.email).size }
     actions
   end
 
@@ -43,6 +44,7 @@ ActiveAdmin.register User do
       row :phone
       my_tag_row :state
       row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
+      row(:tags) { |u| u.tags.map(&:name).join ', ' }
       row :email
     end
     # TODO: Tickets
