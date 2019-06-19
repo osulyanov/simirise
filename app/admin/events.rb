@@ -8,9 +8,8 @@ ActiveAdmin.register Event do
   config.sort_order = 'starts_at_desc'
 
   scope :all, default: true
-  Event.access_statuses.keys.each do |status|
-    scope(I18n.t("activerecord.attributes.event.access_statuses.#{status}")) { |scope| scope.where(access_status: status) }
-  end
+  scope('Текущие') { |scope| scope.where('events.ends_at >= ?', Date.today) }
+  scope('Прошедшие') { |scope| scope.where('events.ends_at < ?', Date.today) }
 
   index do
     selectable_column
