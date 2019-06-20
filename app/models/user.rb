@@ -6,10 +6,6 @@ class User < ApplicationRecord
   has_one_attached :photo
 
   has_and_belongs_to_many :tags
-
-  def self.tags
-    all.pluck(:tags).flat_map { |t| t&.split(',') }.uniq
-  end
 end
 
 # == Schema Information
