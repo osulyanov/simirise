@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :tags
   has_many :tickets
+  has_many :orders, through: :tickets
+  has_many :events, through: :orders
 end
 
 # == Schema Information
@@ -14,6 +16,7 @@ end
 # Table name: users
 #
 #  id         :bigint(8)        not null, primary key
+#  answers    :jsonb
 #  birth_date :date
 #  comment    :text
 #  email      :citext

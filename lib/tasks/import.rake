@@ -69,11 +69,31 @@ namespace :import do
             ticket.ticket_type_id = t.delete('ticket_type')['id']
             t.delete('personal_link')
             t.each { |k, v| ticket.assign_attributes :"#{k}" => v }
+            ticket.user = user_for_ticket(ticket)
             ticket.save!
           end
         end
         break unless total > processed
       end
     end
+  end
+
+  def user_for_ticket(ticket)
+    answers = ticket.answers.dup
+    User.find_or_initialize_by(email: answers.delete('mail')).tap do |user|
+      user.name = [answers.delete('name'), answers.delete('surname')].join(' ')
+      user.phone = answers.delete('phone')
+      user.answers = (user.answers.is_a?(Hash) ? user.answers : {}).merge(named_answers(answers, ticket.order.event)).uniq
+      user.state = :approved if %w[ok paid].include?(ticket.order.status['name'])
+      user.state = :rejected if %w[rejected inactive].include?(ticket.order.status['name'])
+      user.save!
+    end
+  end
+
+  def named_answers(answers, event)
+    answers.map do |field_id, answer|
+      title = event.questions.select { |q| q['field_id'] == field_id }.first.dig('name')
+      { title || field_id => answer }
+    end.reduce({}, :merge)
   end
 end

@@ -17,7 +17,7 @@ ActiveAdmin.register User do
     column :email
     my_tag_column :state, interactive: true
     column(:tags) { |u| u.tags.map(&:name).join(', ') }
-    # column('Количество билетов') { |u| Order.where(mail: u.email).size }
+    column('Количество билетов') { |u| u.tickets.size }
     actions
   end
 
@@ -28,6 +28,7 @@ ActiveAdmin.register User do
   filter :state
   filter :tags
   filter :comment
+  filter :events #, as: :select, collection: Event.all
 
   sidebar I18n.t('activerecord.attributes.user.photo'), only: :show do
     attributes_table_for user do
@@ -46,6 +47,7 @@ ActiveAdmin.register User do
       row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
       row(:tags) { |u| u.tags.map(&:name).join ', ' }
       row :email
+      row :answers
     end
     # TODO: Tickets
     active_admin_comments
@@ -56,7 +58,7 @@ ActiveAdmin.register User do
       f.semantic_errors(*f.object.errors.keys)
       f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
       f.input :name
-      f.input :email
+      f.input :email, as: :string
       f.input :phone
       f.input :birth_date, as: :date_time_picker, picker_options: { timepicker: false,
                                                                     min_date: Date.today - 100.years,
