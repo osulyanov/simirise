@@ -13,10 +13,11 @@ class User < ApplicationRecord
   end
 
   def self.ids_by_event(event_id)
-    Event.find(event_id)
+    ids = Event.find(event_id)
          .orders
          .includes(:tickets)
          .flat_map { |o| o.tickets.pluck :user_id }
+    ids.present? ? ids : [0]
   end
 end
 

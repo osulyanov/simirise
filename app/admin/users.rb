@@ -2,6 +2,7 @@
 
 ActiveAdmin.register User do
   menu priority: 1
+  includes :tags, :tickets
 
   scope :all, default: true
   User.states.keys.each do |state|

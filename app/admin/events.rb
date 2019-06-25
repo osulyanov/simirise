@@ -2,6 +2,7 @@
 
 ActiveAdmin.register Event do
   menu priority: 4
+  includes :orders
 
   actions :index, :show, :edit, :update, :delete
 
