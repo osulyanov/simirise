@@ -7,8 +7,17 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :tags
   has_many :tickets
-  has_many :orders, through: :tickets
-  has_many :events, through: :orders
+
+  ransacker :event_id, formatter: proc { |event_id| ids_by_event(event_id) } do |parent|
+    parent.table[:id]
+  end
+
+  def self.ids_by_event(event_id)
+    Event.find(event_id)
+         .orders
+         .includes(:tickets)
+         .flat_map { |o| o.tickets.pluck :user_id }
+  end
 end
 
 # == Schema Information

@@ -28,7 +28,7 @@ ActiveAdmin.register User do
   filter :state
   filter :tags
   filter :comment
-  filter :events #, as: :select, collection: Event.all
+  filter :event_id_in, as: :select, collection: Event.all
 
   sidebar I18n.t('activerecord.attributes.user.photo'), only: :show do
     attributes_table_for user do
