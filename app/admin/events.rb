@@ -22,7 +22,7 @@ ActiveAdmin.register Event do
     end
     column(:tickets_sold) { |e| e.tickets.size }
     # column(:summ) { |_u| 0 } # TODO
-    # column(:guests) { |_u| 'LINK' } # TODO
+    column(:guests) { |e| link_to 'Посмотреть гостей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
     actions
   end
 
