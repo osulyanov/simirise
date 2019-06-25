@@ -22,7 +22,8 @@ ActiveAdmin.register Event do
     end
     column(:tickets_sold) { |e| e.tickets.size }
     # column(:summ) { |_u| 0 } # TODO
-    column(:guests) { |e| link_to 'Посмотреть гостей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
+    column(:guests) { |e| link_to 'Посмотреть список покупателей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
+    column(:guests) { |e| link_to 'Посмотреть ожидающих модерацию', admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie) }
     actions
   end
 
