@@ -92,7 +92,7 @@ namespace :import do
 
   def named_answers(answers, event)
     answers.map do |field_id, answer|
-      title = event.questions.select { |q| q['field_id'] == field_id }.first.dig('name')
+      title = event.questions.select { |q| q['field_id'] == field_id }.first&.dig('name')
       { title || field_id => answer }
     end.reduce({}, :merge)
   end
