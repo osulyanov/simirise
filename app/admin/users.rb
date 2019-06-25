@@ -49,8 +49,20 @@ ActiveAdmin.register User do
       row :email
       row :answers
     end
-    # TODO: Tickets
+
     active_admin_comments
+
+    panel 'Билеты' do
+      table_for user.tickets do
+        column :id
+        column('Имя гостя') { |t| [t.answers['name'], t.answers['surname']].join(' ') }
+        column('Название мероприятия') { |t| t.order.event.name }
+        column('Статус заказа') { |t| t.order.status['title'] }
+        column('Дата оплаты') { |t| l(t.order.payment['paid_at'].to_time, format: :long) if t.order.payment['paid_at'] }
+        column('Сумма оплаты') { |t| t.price_nominal }
+        column('Промокод') { |t| t.order.promocodes&.uniq }
+      end
+    end
   end
 
   form do |f|
