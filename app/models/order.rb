@@ -15,7 +15,8 @@ class Order < ApplicationRecord
       all.each do |order|
         csv << attributes.flat_map do |attr|
           name, key = attr.split('.')
-          key ? order.send(name).dig(key) : order.send(name)
+          value = key ? order.send(name).dig(key) : order.send(name)
+          value.is_a?(Array) ? value.uniq.join(';') : value
         end
       end
     end
