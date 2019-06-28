@@ -5,6 +5,21 @@ class Order < ApplicationRecord
   has_many :tickets, dependent: :destroy
 
   scope :paid, -> { where("status ->> 'name' = ?", 'paid').or(where("status ->> 'name' = ?", 'ok')) }
+
+  def self.to_csv
+    attributes = %w[id mail promocodes timepad_id payment.amount status.name status.title]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |order|
+        csv << attributes.flat_map do |attr|
+          name, key = attr.split('.')
+          key ? order.send(name).dig(key) : order.send(name)
+        end
+      end
+    end
+  end
 end
 
 # == Schema Information

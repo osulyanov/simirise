@@ -23,12 +23,18 @@ ActiveAdmin.register Event do
     end
     column(:tickets_sold) { |e| Ticket.where(order: e.orders.paid).size }
     column(:summ) { |e| number_to_currency(e.orders.sum { |o| o.payment.dig('amount') }, unit: '₽').gsub(' ', '&nbsp').html_safe }
-    column(:guests) { |e| link_to 'Посмотреть список покупателей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
-    column(:guests) { |e| link_to 'Посмотреть ожидающих модерацию', admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie) }
-    actions
+    column('Посмотреть список покупателей') { |e| link_to 'Посмотреть список покупателей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
+    column('Посмотреть ожидающих модерацию') { |e| link_to 'Посмотреть ожидающих модерацию', admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie) }
+    actions do |event|
+      link_to('Заказы.CSV', orders_csv_admin_event_path(event, format: :csv))
+    end
   end
 
   config.filters = false
+
+  member_action :orders_csv do
+    send_data resource.orders.to_csv, filename: "users-#{Date.today}.csv"
+  end
 
   sidebar I18n.t('activerecord.attributes.user.photo'), only: :show do
     attributes_table_for event do
