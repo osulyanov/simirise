@@ -70,7 +70,12 @@ namespace :import do
             t.delete('personal_link')
             t.each { |k, v| ticket.assign_attributes :"#{k}" => v }
             ticket.user = user_for_ticket(ticket)
-            ticket.save!
+            if ticket.valid?
+              ticket.save!
+            else
+              puts "ERRORS: #{ticket.errors.full_messages}\n" \
+                   "DATA: #{tickets.inspect}"
+            end
           end
         end
         break unless total > processed

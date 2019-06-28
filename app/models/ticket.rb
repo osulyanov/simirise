@@ -3,7 +3,8 @@
 class Ticket < ApplicationRecord
   belongs_to :order
   belongs_to :user
-  belongs_to :ticket_type, primary_key: :timepad_id
+  belongs_to :ticket_type, primary_key: :timepad_id,
+                           optional: true
 end
 
 # == Schema Information
