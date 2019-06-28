@@ -21,7 +21,7 @@ ActiveAdmin.register Event do
       "#{'—' if e.ends_at}" \
       "#{l e.ends_at, format: :long if e.ends_at}"
     end
-    column(:tickets_sold) { |e| Ticket.where(order: e.orders.paid).size }
+    column(:tickets_sold) { |e| Ticket.where(order: e.orders.not_free).size }
     column(:summ) { |e| number_to_currency(e.orders.paid.sum { |o| o.payment.dig('amount') }, unit: '₽').gsub(' ', '&nbsp').html_safe }
     column('Посмотреть список покупателей') { |e| link_to 'Посмотреть список покупателей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
     column('Посмотреть ожидающих модерацию') { |e| link_to 'Посмотреть ожидающих модерацию', admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie) }

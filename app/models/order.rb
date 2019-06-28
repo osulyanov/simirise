@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   has_many :tickets, dependent: :destroy
 
   scope :paid, -> { where("status ->> 'name' = ?", 'paid').or(where("status ->> 'name' = ?", 'ok')) }
+  scope :free, -> { where("status ->> 'name' = ?", 'ok') }
+  scope :not_free, -> { where("status ->> 'name' = ?", 'paid') }
 
   def self.to_csv
     attributes = %w[id mail promocodes timepad_id payment.amount status.name status.title]
