@@ -15,6 +15,7 @@ end
 #  answers        :jsonb
 #  attendance     :jsonb
 #  codes          :jsonb
+#  imported_at    :datetime
 #  number         :string
 #  place          :jsonb
 #  price_nominal  :integer
@@ -27,6 +28,7 @@ end
 #
 # Indexes
 #
+#  index_tickets_on_imported_at     (imported_at)
 #  index_tickets_on_order_id        (order_id)
 #  index_tickets_on_ticket_type_id  (ticket_type_id)
 #  index_tickets_on_user_id         (user_id)

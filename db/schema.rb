@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_195612) do
+ActiveRecord::Schema.define(version: 2019_07_01_141152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -110,7 +110,9 @@ ActiveRecord::Schema.define(version: 2019_06_21_195612) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "answers"
+    t.datetime "imported_at"
     t.index ["event_id"], name: "index_orders_on_event_id"
+    t.index ["imported_at"], name: "index_orders_on_imported_at"
   end
 
   create_table "performances", force: :cascade do |t|
@@ -183,6 +185,8 @@ ActiveRecord::Schema.define(version: 2019_06_21_195612) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.datetime "imported_at"
+    t.index ["imported_at"], name: "index_tickets_on_imported_at"
     t.index ["order_id"], name: "index_tickets_on_order_id"
     t.index ["ticket_type_id"], name: "index_tickets_on_ticket_type_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"

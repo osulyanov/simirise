@@ -46,6 +46,7 @@ namespace :import do
   end
 
   def import_orders(events)
+    current_time = Time.zone.now
     timepad = Timepad.new
     events.find_each do |event|
       puts "import #{event.name}"
@@ -59,6 +60,7 @@ namespace :import do
         processed += timepad_orders.size
         timepad_orders.each do |to|
           order = event.orders.find_or_initialize_by(timepad_id: to.delete('id'))
+          order.imported_at = current_time
           to.delete('subscribed_to_newsletter')
           to.delete('_links')
           tickets = to.delete('tickets')
@@ -66,6 +68,7 @@ namespace :import do
           order.save!
           tickets.each do |t|
             ticket = order.tickets.find_or_initialize_by(timepad_id: t.delete('id'))
+            ticket.imported_at = current_time
             ticket.ticket_type_id = t.delete('ticket_type')['id']
             t.delete('personal_link')
             t.each { |k, v| ticket.assign_attributes :"#{k}" => v }
@@ -77,7 +80,9 @@ namespace :import do
                    "DATA: #{tickets.inspect}"
             end
           end
+          order.tickets.where.not(imported_at: current_time).destroy_all
         end
+        event.orders.where.not(imported_at: current_time).destroy_all
         break unless total > processed
       end
     end
