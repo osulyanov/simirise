@@ -3,5 +3,7 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  mount Facebook::Messenger::Server, at: "bot"
   root to: redirect('/admin')
+  get '/webhook', to: 'home#webhook'
 end

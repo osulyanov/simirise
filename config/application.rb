@@ -29,6 +29,9 @@ module Simirise
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.paths.add File.join('app', 'bot'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'bot', '*')]
+
     # Don't generate system test files.
     config.generators.system_tests = nil
 
