@@ -1,0 +1,54 @@
+{
+  "profile": {
+    "greeting": [
+      {
+        "locale": "default",
+        "text": "Хей! Это Rise Entertainment Bot"
+      }
+    ],
+    "get_started": {
+      "payload": "get_started"
+    }
+  },
+
+  "payloads": {
+    "get_started": [
+      {
+        "message": { "text": "Greetins man" }
+      },
+      {
+        "message": {
+          "attachment": {
+            "type": "template",
+            "payload": {
+              "template_type": "button",
+              "text": "Нужно что-то выбрать в меню",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Мероприятия",
+                  "payload": "events"
+                },
+                {
+                  "type": "postback",
+                  "title": "Связаться с организатором",
+                  "payload": "contact"
+                },
+                {
+                  "type": "postback",
+                  "title": "Статус модерации",
+                  "payload": "status"
+                },
+                {
+                  "type": "postback",
+                  "title": "Live: Афтерхэллоуин",
+                  "payload": "live"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

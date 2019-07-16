@@ -5,5 +5,4 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount Facebook::Messenger::Server, at: "bot"
   root to: redirect('/admin')
-  get '/webhook', to: 'home#webhook'
 end
