@@ -8,44 +8,95 @@ Facebook::Messenger::Subscriptions.subscribe(
 )
 
 Facebook::Messenger::Profile.set({
-                                   greeting: [
+                                   "persistent_menu": [
                                      {
-                                       locale: 'default',
-                                       text: 'Хей! Это Rise Entertainment Bot'
+                                       "locale": 'default',
+                                       "composer_input_disabled": false,
+                                       "call_to_actions": [
+                                         {
+                                           "type": 'postback',
+                                           "title": 'Talk to an agent',
+                                           "payload": 'CARE_HELP'
+                                         },
+                                         {
+                                           "type": 'postback',
+                                           "title": 'Outfit suggestions',
+                                           "payload": 'CURATION'
+                                         },
+                                         {
+                                           "type": 'web_url',
+                                           "title": 'Shop now',
+                                           "url": 'https://www.originalcoastclothing.com/',
+                                           "webview_height_ratio": 'full'
+                                         }
+                                       ]
                                      }
                                    ],
                                    get_started: {
                                      payload: 'get_started'
-                                   }
+                                   },
+                                   greeting: [
+                                     {
+                                       locale: 'default',
+                                       text: 'Хей {{user_full_name}}! Это Rise Entertainment Bot'
+                                     }
+                                   ]
                                  }, access_token: Rails.application.credentials.access_token)
 
-# message.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
-# message.sender      # => { 'id' => '1008372609250235' }
-# message.sent_at     # => 2016-04-22 21:30:36 +0200
-# message.text        # => 'Hello, bot!'
+def say_lola(sender, postback_id)
+  bot = Lola.new(sender, postback_id)
+
+  if bot.respond_to?(postback_id)
+    bot.send(postback_id)
+  else
+    bot.call_custom_action
+  end
+end
 
 Bot.on :message do |message|
-  bot = Lola.new(message.sender, message.text)
-  sender = get_sender_profile(message.sender)
+  puts "MESSAGE: #{message.text} /// #{message.quick_reply} /// #{message.attachments}"
 
-  puts "! ! ! sender #{sender.inspect}"
-
-  bot.ask
+  say_lola(message.sender, message.quick_reply) if message.quick_reply
 end
 
 Bot.on :postback do |postback|
   payload = postback.payload
   parsed_payload = valid?(payload) ? JSON.parse(payload) : payload
+  postback_id = parsed_payload && parsed_payload['id'] ? parsed_payload['id'] : parsed_payload
 
-  puts "! ! ! postback: #{parsed_payload.inspect}"
+  puts "POSTBACK: #{parsed_payload.inspect}"
 
-  bot = Lola.new(postback.sender, parsed_payload)
+  say_lola(postback.sender, postback_id)
+end
 
-  if parsed_payload && parsed_payload['id']
-    bot.send(parsed_payload['id'])
-  else
-    bot.send(parsed_payload)
-  end
+Bot.on :message_echo do |message_echo|
+  message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
+  message_echo.sender      # => { 'id' => '1008372609250235' }
+  message_echo.seq         # => 73
+  message_echo.sent_at     # => 2016-04-22 21:30:36 +0200
+  message_echo.text        # => 'Hello, bot!'
+  message_echo.attachments # => [ { 'type' => 'image', 'payload' => { 'url' => 'https://www.example.com/1.jpg' } } ]
+
+  puts "ECHO: #{message_echo.inspect}"
+end
+
+Bot.on :optin do |optin|
+  optin.sender    # => { 'id' => '1008372609250235' }
+  optin.recipient # => { 'id' => '2015573629214912' }
+  optin.sent_at   # => 2016-04-22 21:30:36 +0200
+  optin.ref       # => 'CONTACT_SKYNET'
+
+  puts "OPTIN: #{optin.ref}"
+end
+
+Bot.on :delivery do |delivery|
+  delivery.ids       # => 'mid.1457764197618:41d102a3e1ae206a38'
+  delivery.sender    # => { 'id' => '1008372609250235' }
+  delivery.recipient # => { 'id' => '2015573629214912' }
+  delivery.at        # => 2016-04-22 21:30:36 +0200
+  delivery.seq       # => 37
+
+  puts "Human was online at #{delivery.at}"
 end
 
 def valid?(json)
@@ -53,16 +104,4 @@ def valid?(json)
   true
 rescue StandardError
   false
-end
-
-def get_sender_profile(sender)
-  request = HTTParty.get(
-    "https://graph.facebook.com/v3.3/#{sender['id']}",
-    query: {
-      access_token: Rails.application.credentials.access_token,
-      fields: 'first_name,last_name,gender,profile_pic'
-    }
-  )
-
-  request.parsed_response
 end

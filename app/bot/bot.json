@@ -10,43 +10,54 @@
       "payload": "get_started"
     }
   },
-
   "payloads": {
     "get_started": [
       {
-        "message": { "text": "Greetins man" }
-      },
-      {
+        "messaging_type": "RESPONSE",
         "message": {
-          "attachment": {
-            "type": "template",
-            "payload": {
-              "template_type": "button",
-              "text": "Нужно что-то выбрать в меню",
-              "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Мероприятия",
-                  "payload": "events"
-                },
-                {
-                  "type": "postback",
-                  "title": "Связаться с организатором",
-                  "payload": "contact"
-                },
-                {
-                  "type": "postback",
-                  "title": "Статус модерации",
-                  "payload": "status"
-                },
-                {
-                  "type": "postback",
-                  "title": "Live: Афтерхэллоуин",
-                  "payload": "live"
-                }
-              ]
+          "text": "Что ищем?",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
             }
-          }
+          ]
+        }
+      }
+    ],
+    "events": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Какие?",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Будущие",
+              "payload": "future_events"
+            },
+            {
+              "content_type": "text",
+              "title": "Прошедшие",
+              "payload": "past_events"
+            }
+          ]
         }
       }
     ]

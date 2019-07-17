@@ -9,146 +9,55 @@ class Lola
     @sender = sender
     @payload = payload
     file = File.read(Rails.root.join('app', 'bot', 'bot.json'))
-    @source = JSON.parse(file)
-  end
-
-  def buy
-    Bot.deliver({
-                  recipient: sender,
-                  message: {
-                    attachment: {
-                      type: 'template',
-                      payload: {
-                        template_type: 'receipt',
-                        recipient_name: 'John Doe',
-                        order_number: SecureRandom.random_number(100_000).to_s,
-                        currency: 'GBP',
-                        payment_method: 'Visa 2345',
-                        order_url: 'https://asos.com/',
-                        timestamp: Time.now.to_i,
-                        elements: [
-                          {
-                            title: payload['product_name'],
-                            subtitle: payload['product_name'],
-                            quantity: 2,
-                            price: 50,
-                            currency: 'GBP',
-                            image_url: payload['product_image']
-                          }
-                        ],
-                        address: {
-                          street_1: '1 Hacker Way',
-                          street_2: 'Coding program',
-                          city: 'Menlo Park',
-                          postal_code: '94025',
-                          state: 'CA',
-                          country: 'GB'
-                        },
-                        summary: {
-                          subtotal: 75.00,
-                          shipping_cost: 4.95,
-                          total_tax: 6.19,
-                          total_cost: 56.14
-                        }
-                      }
-                    }
-                  }
-                }, access_token: Rails.application.credentials.access_token)
-  end
-
-  def end_chat
-    Bot.deliver({
-                  recipient: sender,
-                  message: {
-                    text: 'Bye! see you another time'
-                  }
-                }, access_token: Rails.application.credentials.access_token)
+    @source = JSON.parse(file).with_indifferent_access
   end
 
   def get_started
-    Bot.deliver({
-                  recipient: sender,
-                  message: {
-                    text: 'Greetins man'
-                  }
-                }, access_token: Rails.application.credentials.access_token)
+    profile = get_sender_profile(sender)
+    # puts "profile=#{profile.inspect}"
+
+    payload_jsons.each do |payload_json|
+      puts "payload_json=#{payload_jsons}"
+
+      Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
+    end
   end
 
-  def ask
-    buttons = %w[aaa bbb ccc].map do |category|
-      {
-        type: 'postback',
-        title: category.capitalize,
-        payload: {
-          id: 'suggest',
-          category: category
-        }.to_json
-      }
-    end
+  def events
+    payload_jsons.each do |payload_json|
+      puts "payload_jsons=#{payload_json}"
 
-    Bot.deliver(
-      {
-        recipient: sender,
-        message: {
-          attachment: {
-            type: 'template',
-            payload: {
-              template_type: 'button',
-              text: 'What are you looking for?',
-              buttons: buttons
-            }
-          }
-        }
-      }, access_token: Rails.application.credentials.access_token
+      Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
+    end
+  end
+
+  def call_custom_action
+    payload_jsons.each do |payload_json|
+      puts "payload_jsons=#{payload_json}"
+
+      Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
+    end
+  end
+
+  private
+
+  def payload_jsons
+    payload_name = payload && payload['id'] ? payload['id'] : payload
+
+    puts "payload_name=#{payload_name}"
+
+    source.dig(:payloads, payload_name).map { |p| p.merge(recipient: sender) }
+  end
+
+  def get_sender_profile(sender)
+    request = HTTParty.get(
+      "https://graph.facebook.com/v3.3/#{sender['id']}",
+      query: {
+        access_token: Rails.application.credentials.access_token,
+        fields: 'id,name,profile_pic,gender'
+      }
     )
-  end
 
-  def suggest
-    products = ["Product of #{payload['category']}"]
-
-    Bot.deliver({
-                  recipient: sender,
-                  message: {
-                    text: "Here are some new arrivals in: #{payload['category']}"
-                  }
-                }, access_token: Rails.application.credentials.access_token)
-
-    elements = products.map do |product|
-      {
-        title: product,
-        subtitle: product,
-        # image_url: product.image,
-        buttons: [
-          {
-            type: 'postback',
-            title: 'Buy',
-            payload: {
-              id: 'buy',
-              product_id: product,
-              product_name: product,
-              # product_image: product.image
-            }.to_json
-          },
-          {
-            type: 'postback',
-            title: 'Not interested!',
-            payload: 'end_chat'
-          }
-        ]
-      }
-    end
-
-    Bot.deliver({
-                  recipient: sender,
-                  message: {
-                    attachment: {
-                      type: 'template',
-                      payload: {
-                        template_type: 'generic',
-                        elements: elements.to_json
-                      }
-                    }
-                  }
-                }, access_token: Rails.application.credentials.access_token)
+    request.parsed_response
   end
 end
