@@ -68,15 +68,15 @@ Bot.on :message do |message|
   puts "MESSAGE: #{message.text} /// #{message.quick_reply} /// #{message.attachments}"
 
   if message.quick_reply
-    say_lola(user(message.sender), message.quick_reply)
+    say_lola(user(message.sender['id']), message.quick_reply)
   elsif contact_started?(message.sender)
     puts 'SAVE MESSAGE'
     user(message.sender)
-    # TODO: SAVE MESSAGE
+    # Send to admin
 
-    say_lola(user(message.sender), :contact_end)
+    say_lola(user(message.sender['id']), 'contact_end')
   else
-    say_lola(user(message.sender), :contact_start)
+    say_lola(user(message.sender['id']), 'contact_start')
   end
 end
 
@@ -87,39 +87,13 @@ Bot.on :postback do |postback|
 
   puts "POSTBACK: #{parsed_payload.inspect}"
 
-  say_lola(user(postback.sender), postback_id)
+  say_lola(user(postback.sender['id']), postback_id)
 end
 
 Bot.on :message_echo do |message_echo|
-  message_echo.id # => 'mid.1457764197618:41d102a3e1ae206a38'
-  message_echo.sender # => { 'id' => '1008372609250235' }
-  message_echo.seq # => 73
-  message_echo.sent_at # => 2016-04-22 21:30:36 +0200
-  message_echo.text # => 'Hello, bot!'
-  message_echo.attachments # => [ { 'type' => 'image', 'payload' => { 'url' => 'https://www.example.com/1.jpg' } } ]
-
   puts "ECHO: #{message_echo.inspect}"
 
   user(message_echo.recipient['id']).add_message(message_echo.messaging)
-end
-
-Bot.on :optin do |optin|
-  optin.sender # => { 'id' => '1008372609250235' }
-  optin.recipient # => { 'id' => '2015573629214912' }
-  optin.sent_at # => 2016-04-22 21:30:36 +0200
-  optin.ref # => 'CONTACT_SKYNET'
-
-  puts "OPTIN: #{optin.ref}"
-end
-
-Bot.on :delivery do |delivery|
-  delivery.ids # => 'mid.1457764197618:41d102a3e1ae206a38'
-  delivery.sender # => { 'id' => '1008372609250235' }
-  delivery.recipient # => { 'id' => '2015573629214912' }
-  delivery.at # => 2016-04-22 21:30:36 +0200
-  delivery.seq # => 37
-
-  puts "Human was online at #{delivery.at}"
 end
 
 def valid?(json)

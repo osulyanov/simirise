@@ -39,7 +39,7 @@
       {
         "messaging_type": "RESPONSE",
         "message": {
-          "text": "Что ищем?",
+          "text": "👋🏻",
           "quick_replies": [
             {
               "content_type": "text",
@@ -98,6 +98,158 @@
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
+        }
+      }
+    ],
+    "event_description": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "description_html"
+          }
+        }
+      }
+    ],
+    "event_performances": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "performances_text"
+          }
+        }
+      }
+    ],
+    "event_line_ups": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "line_ups_text"
+          }
+        }
+      }
+    ],
+    "event_conditions": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "conditions"
+          }
+        }
+      }
+    ],
+    "event_location": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Место проведения мероприятия",
+                "buttons": [
+                  {
+                    "type": "web_url",
+                    "url": "map_link",
+                    "title": "Показать карту",
+                    "webview_height_ratio": "full"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ],
+    "event_details": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "quick_replies",
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "Подробнее о мероприятии",
+            "quick_replies": [
+              {
+                "content_type": "text",
+                "title": "Описание мероприятия",
+                "payload": "event_description|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Расписание перфомансов",
+                "payload": "event_performances|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Line-up",
+                "payload": "event_line_ups|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Место проведения мероприятия",
+                "payload": "event_location|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Условия",
+                "payload": "event_conditions|:id"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "live": [
+      {
+        "data_source": {
+          "model": "Event",
+          "scope": "live"
+        },
+        "type": "elements",
+        "template": {
+          "message": {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "sharable": "true",
+                "elements": {
+                  "title": "name",
+                  "image_url": "poster_image_url",
+                  "subtitle": "description_short",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Подробнее",
+                      "payload": "event_details|:id"
+                    }
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     ]

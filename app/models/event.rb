@@ -22,10 +22,14 @@ class Event < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: :all_blank
 
-  scope :future, -> do
+  scope :future, lambda {
     where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
           starts: Date.today.beginning_of_day,
           ends: Date.today.end_of_day
+  }
+
+  def self.live
+    [future.first] || [last]
   end
 
   def full_address
@@ -34,6 +38,21 @@ class Event < ApplicationRecord
 
   def map_link
     "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=15" if coordinates.present?
+  end
+
+  def poster_image_url
+    return nil unless poster_image.attached? && poster_image.image?
+
+    variant = poster_image.variant(combine_options: { resize: '300x300>' })
+    Rails.application.routes.url_helpers.rails_representation_url(variant)
+  end
+
+  def performances_text
+    performances.map { |p| "#{p.name}\n#{p.description}" }.join("\n\n")
+  end
+
+  def line_ups_text
+    line_ups.map { |p| "#{p.name}\n#{p.timing}\n#{p.description}" }.join("\n\n")
   end
 end
 
