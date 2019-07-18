@@ -3,23 +3,22 @@
     "persistent_menu": [
       {
         "locale": "default",
-        "composer_input_disabled": false,
+        "composer_input_disabled": true,
         "call_to_actions": [
           {
             "type": "postback",
-            "title": "Talk to an agent",
-            "payload": "CARE_HELP"
+            "title": "В основное меню",
+            "payload": "get_started"
           },
           {
             "type": "postback",
-            "title": "Outfit suggestions",
-            "payload": "CURATION"
+            "title": "Назад",
+            "payload": "back"
           },
           {
-            "type": "web_url",
-            "title": "Shop now",
-            "url": "https://www.originalcoastclothing.com/",
-            "webview_height_ratio": "full"
+            "type": "postback",
+            "title": "Связаться с нами",
+            "payload": "contact_start"
           }
         ]
       }
@@ -65,6 +64,15 @@
         }
       }
     ],
+    "back": [
+      {
+        "composer_input_disabled": false,
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Назад в разработке"
+        }
+      }
+    ],
     "events": [
       {
         "messaging_type": "RESPONSE",
@@ -87,6 +95,7 @@
     ],
     "contact_start": [
       {
+        "composer_input_disabled": false,
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Хотите задать вопрос? Напишите свой вопрос оператору сейчас!"
@@ -95,6 +104,7 @@
     ],
     "contact_end": [
       {
+        "composer_input_disabled": true,
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
