@@ -3,22 +3,20 @@
 class Lola
   include Facebook::Messenger
 
-  attr_accessor :sender, :payload, :source
+  attr_accessor :user, :payload, :source
 
-  def initialize(sender, payload)
-    @sender = sender
+  def initialize(user, payload)
+    @user = user
     @payload = payload
     file = File.read(Rails.root.join('app', 'bot', 'bot.json'))
     @source = JSON.parse(file).with_indifferent_access
   end
 
   def get_started
-    profile = get_sender_profile(sender)
-    # puts "profile=#{profile.inspect}"
-
     payload_jsons.each do |payload_json|
       puts "payload_json=#{payload_jsons}"
 
+      user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
     end
   end
@@ -27,6 +25,7 @@ class Lola
     payload_jsons.each do |payload_json|
       puts "payload_jsons=#{payload_json}"
 
+      user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
     end
   end
@@ -35,6 +34,7 @@ class Lola
     payload_jsons.each do |payload_json|
       puts "payload_jsons=#{payload_json}"
 
+      user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
     end
   end
@@ -46,18 +46,6 @@ class Lola
 
     puts "payload_name=#{payload_name}"
 
-    source.dig(:payloads, payload_name).map { |p| p.merge(recipient: sender) }
-  end
-
-  def get_sender_profile(sender)
-    request = HTTParty.get(
-      "https://graph.facebook.com/v3.3/#{sender['id']}",
-      query: {
-        access_token: Rails.application.credentials.access_token,
-        fields: 'id,name,profile_pic,gender'
-      }
-    )
-
-    request.parsed_response
+    source.dig(:payloads, payload_name).map { |p| p.merge(recipient: { id: user.fb_id }) }
   end
 end

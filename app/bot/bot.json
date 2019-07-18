@@ -1,14 +1,38 @@
 {
   "profile": {
-    "greeting": [
+    "persistent_menu": [
       {
         "locale": "default",
-        "text": "Хей! Это Rise Entertainment Bot"
+        "composer_input_disabled": false,
+        "call_to_actions": [
+          {
+            "type": "postback",
+            "title": "Talk to an agent",
+            "payload": "CARE_HELP"
+          },
+          {
+            "type": "postback",
+            "title": "Outfit suggestions",
+            "payload": "CURATION"
+          },
+          {
+            "type": "web_url",
+            "title": "Shop now",
+            "url": "https://www.originalcoastclothing.com/",
+            "webview_height_ratio": "full"
+          }
+        ]
       }
     ],
     "get_started": {
       "payload": "get_started"
-    }
+    },
+    "greeting": [
+      {
+        "locale": "default",
+        "text": "Хей {{user_full_name}}! Это Rise Entertainment Bot"
+      }
+    ]
   },
   "payloads": {
     "get_started": [
@@ -25,7 +49,7 @@
             {
               "content_type": "text",
               "title": "Связаться с нами",
-              "payload": "contact"
+              "payload": "contact_start"
             },
             {
               "content_type": "text",
@@ -58,6 +82,22 @@
               "payload": "past_events"
             }
           ]
+        }
+      }
+    ],
+    "contact_start": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Хотите задать вопрос? Напишите свой вопрос оператору сейчас!"
+        }
+      }
+    ],
+    "contact_end": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
         }
       }
     ]
