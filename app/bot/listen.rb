@@ -34,10 +34,16 @@ def get_sender_profile(fb_id)
   request.parsed_response
 end
 
-def contact_started?(sender)
-  last_message = user(sender['id']).messages&.last&.dig('message', 'text')
-  contact_start_texts = @source.dig(:payloads, :contact_start).map { |c| c.dig(:message, :text) }
-  last_message.present? && contact_start_texts.include?(last_message)
+def asked?(sender, question_payloads)
+  last_message = fuser(sender['id']).messages&.last&.dig('message', 'text')
+
+  payload_texts = if question_payloads.is_a?(Array)
+                    question_payloads.flat_map { |question_payloads| @source.dig(:payloads, question_payloads).map { |c| c.dig(:message, :text) } }
+                  else
+                    @source.dig(:payloads, question_payloads).map { |c| c.dig(:message, :text) }
+                  end
+
+  last_message.present? && payload_texts.include?(last_message)
 end
 
 def fuser(fb_id = nil)
@@ -68,13 +74,26 @@ Bot.on :message do |message|
   puts "MESSAGE: #{message.text} /// #{message.quick_reply} /// #{message.attachments}"
 
   if message.quick_reply
-    say_lola(user(message.sender['id']), message.quick_reply)
-  elsif contact_started?(message.sender)
+    say_lola(fuser(message.sender['id']), message.quick_reply)
+  elsif asked?(message.sender, :contact_start)
     puts 'SAVE MESSAGE'
     fuser(message.sender)
     # Send to admin
 
     say_lola(fuser(message.sender['id']), 'contact_end')
+  elsif asked?(message.sender, :moderate)
+    puts 'SEND SMS'
+    fuser(message.sender).send_sms_code(message.text)
+
+    say_lola(fuser(message.sender['id']), 'sms_check')
+  elsif asked?(message.sender, [:sms_check, :sms_resend])
+    puts 'CHECK SMS'
+    if fuser(message.sender).sms_code == message.text
+      fuser(message.sender['id']).inreview!
+      say_lola(fuser(message.sender['id']), 'wait')
+    else
+      say_lola(fuser(message.sender['id']), 'sms_wrong')
+    end
   else
     say_lola(fuser(message.sender['id']), 'contact_start')
   end
@@ -86,6 +105,10 @@ Bot.on :postback do |postback|
   postback_id = parsed_payload && parsed_payload['id'] ? parsed_payload['id'] : parsed_payload
 
   puts "POSTBACK: #{parsed_payload.inspect}"
+
+  if postback_id == 'sms_resend'
+    fuser(postback.sender['id']).send_sms_code
+  end
 
   say_lola(fuser(postback.sender['id']), postback_id)
 end

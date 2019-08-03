@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_111104) do
+ActiveRecord::Schema.define(version: 2019_08_03_140245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -207,6 +207,8 @@ ActiveRecord::Schema.define(version: 2019_08_03_111104) do
     t.string "source"
     t.string "fb_id"
     t.jsonb "messages"
+    t.string "sms_code"
+    t.datetime "smsed_at"
     t.index ["email"], name: "index_users_on_email"
     t.index ["fb_id"], name: "index_users_on_fb_id"
   end

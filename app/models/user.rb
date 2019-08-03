@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  enum state: { pending: 0, rejected: 1, approved: 2 }
+  enum state: { pending: 0, rejected: 1, approved: 2, inreview: 3 }
 
   has_one_attached :photo
 
@@ -25,6 +25,15 @@ class User < ApplicationRecord
     mm << message
     update_attribute :messages, mm
   end
+
+  def send_sms_code(phone = nil)
+    phone ||= self.phone
+    code = Random.new.rand(100_000..999_999).to_s
+    # TODO: SmsRu.sms.send(to: phone, text: "Код подтверждения #{code}")
+    update_attributes phone: phone,
+                      sms_code: code,
+                      smsed_at: Time.zone.now
+  end
 end
 
 # == Schema Information
@@ -40,6 +49,8 @@ end
 #  messages   :jsonb
 #  name       :string
 #  phone      :string
+#  sms_code   :string
+#  smsed_at   :datetime
 #  source     :string
 #  state      :integer          default("pending"), not null
 #  created_at :datetime         not null

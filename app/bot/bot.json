@@ -285,13 +285,128 @@
         "message": {
           "text": "К сожалению, все билеты проданы и вы не сможете попасть на мероприятие."
         }
+      },
+      {
+        "user_condition": "inreview?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Ваш профиль рассматривается модератором"
+        }
+      }
+    ],
+    "status": [
+      {
+        "user_condition": "approved?",
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Вы в клане! Можете покупать билет, будем рады вас видеть!",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Купить билет",
+                  "payload": "future_events"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "pending?",
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Модерация",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Подать заявку",
+                  "payload": "moderate"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "rejected?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "К сожалению, вы не сможете попасть на мероприятие."
+        }
+      },
+      {
+        "user_condition": "inreview?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Ваш профиль рассматривается модератором"
+        }
       }
     ],
     "moderate": [
       {
         "messaging_type": "RESPONSE",
         "message": {
-          "text": "Модерация в разработке"
+          "text": "Отправьте ваш номер телефона"
+        }
+      }
+    ],
+    "sms_check": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Введите код из СМС"
+        }
+      }
+    ],
+    "sms_resend": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Введите код из СМС."
+        }
+      }
+    ],
+    "sms_wrong": [
+      {
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Неверный код",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Связаться с оператором",
+                  "payload": "contact_start"
+                },
+                {
+                  "type": "postback",
+                  "title": "Отправить СМС повторно",
+                  "payload": "sms_resend"
+                },
+                {
+                  "type": "postback",
+                  "title": "Изменить номер телефона",
+                  "payload": "moderate"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "wait": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Заявка подана, ожидайте ответа модерации!"
         }
       }
     ],
