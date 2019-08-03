@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_073615) do
+ActiveRecord::Schema.define(version: 2019_08_03_111104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2019_07_18_073615) do
     t.jsonb "questions", default: [], null: false
     t.integer "moderation_status", default: 0, null: false
     t.text "timepad_description"
+    t.string "report_url"
   end
 
   create_table "line_ups", force: :cascade do |t|

@@ -3,6 +3,7 @@
     "persistent_menu": [
       {
         "locale": "default",
+        "composer_input_disabled": true,
         "call_to_actions": [
           {
             "type": "postback",
@@ -65,6 +66,7 @@
     ],
     "back": [
       {
+        "composer_input_disabled": false,
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Назад в разработке"
@@ -93,6 +95,7 @@
     ],
     "contact_start": [
       {
+        "composer_input_disabled": false,
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Хотите задать вопрос? Напишите свой вопрос оператору сейчас!"
@@ -101,6 +104,7 @@
     ],
     "contact_end": [
       {
+        "composer_input_disabled": true,
         "messaging_type": "RESPONSE",
         "message": {
           "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
@@ -177,7 +181,7 @@
                     "type": "web_url",
                     "url": "map_link",
                     "title": "Показать карту",
-                    "webview_height_ratio": "tall"
+                    "webview_height_ratio": "full"
                   }
                 ]
               }
@@ -250,71 +254,6 @@
                       "type": "postback",
                       "title": "Подробнее",
                       "payload": "event_details|:id"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    ],
-    "future_events": [
-      {
-        "data_source": {
-          "model": "Event",
-          "scope": "future"
-        },
-        "type": "elements",
-        "template": {
-          "message": {
-            "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "generic",
-                "sharable": "true",
-                "elements": {
-                  "title": "name",
-                  "image_url": "poster_image_url",
-                  "subtitle": "description_short",
-                  "buttons": [
-                    {
-                      "type": "postback",
-                      "title": "Подробнее",
-                      "payload": "event_details|:id"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    ],
-    "past_events": [
-      {
-        "data_source": {
-          "model": "Event",
-          "scope": "past"
-        },
-        "type": "elements",
-        "template": {
-          "message": {
-            "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "generic",
-                "sharable": "true",
-                "elements": {
-                  "title": "name",
-                  "image_url": "poster_image_url",
-                  "subtitle": "description_short",
-                  "buttons": [
-                    {
-                      "type": "web_url",
-                      "title": "Отчёт о мероприятии",
-                      "url": "report_url",
-                      "webview_height_ratio": "full"
                     }
                   ]
                 }

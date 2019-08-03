@@ -21,9 +21,9 @@ class User < ApplicationRecord
   end
 
   def add_message(message)
-    messages ||= []
-    messages << message
-    update_attribute :messages, messages
+    mm = messages || []
+    mm << message
+    update_attribute :messages, mm
   end
 end
 

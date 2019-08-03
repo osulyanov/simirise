@@ -23,9 +23,16 @@ class Event < ApplicationRecord
                                 reject_if: :all_blank
 
   scope :future, lambda {
-    where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
-          starts: Date.today.beginning_of_day,
-          ends: Date.today.end_of_day
+    order(starts_at: :desc)
+      .where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
+             starts: Date.today.beginning_of_day,
+             ends: Date.today.end_of_day
+  }
+  scope :past, lambda {
+    order(starts_at: :desc)
+      .where '(starts_at < :starts AND ends_at IS NULL) OR ends_at < :ends',
+             starts: Date.today.end_of_day,
+             ends: Date.today.end_of_day
   }
 
   def self.live
@@ -48,11 +55,11 @@ class Event < ApplicationRecord
   end
 
   def performances_text
-    performances.map { |p| "#{p.name}\n#{p.description}" }.join("\n\n")
+    performances.map { |p| "*#{p.name}*\n#{p.description}" }.join("\n\n")
   end
 
   def line_ups_text
-    line_ups.map { |p| "#{p.name}\n#{p.timing}\n#{p.description}" }.join("\n\n")
+    line_ups.map { |p| "*#{p.name}*\n`#{p.timing}`\n#{p.description}" }.join("\n\n")
   end
 end
 
@@ -72,6 +79,7 @@ end
 #  moderation_status   :integer          default("not_moderated"), not null
 #  name                :string
 #  questions           :jsonb            not null
+#  report_url          :string
 #  starts_at           :datetime
 #  timepad_description :text
 #  created_at          :datetime         not null

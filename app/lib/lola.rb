@@ -23,7 +23,7 @@ class Lola
 
   def events
     payload_jsons.each do |payload_json|
-      puts "payload_jsons=#{payload_json}"
+      puts "\n\npayload_jsons=#{payload_json}"
 
       user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
@@ -50,21 +50,21 @@ class Lola
   end
 
   def process_payload(orig_payload, obj_id)
-    if new_payload = orig_payload.dig(:template)
+    if new_payload = orig_payload.dig(:template)&.clone
       case orig_payload.dig(:type)
       when 'elements'
         elements_template = new_payload['message']['attachment']['payload'].delete(:elements)
         model = orig_payload.dig(:data_source, :model).constantize
         scope = orig_payload.dig(:data_source, :scope)
-        objects = model.send(scope)
+        objects = model.send(scope).limit(10)
         elements = objects.map do |obj|
-          set_elements_vars(obj, elements_template)
-        end
+          set_elements_vars(obj, elements_template.clone)
+        end.select { |t| t['buttons'].present? }
         new_payload['message']['attachment']['payload']['elements'] = elements
       when 'buttons'
         model = orig_payload.dig(:data_source, :model).constantize
         obj = model.find(obj_id)
-        buttons = set_buttons_vars(obj, new_payload['message']['attachment']['payload']['buttons'])
+        buttons = set_buttons_vars(obj, new_payload['message']['attachment']['payload']['buttons'].clone)
         new_payload['message']['attachment']['payload']['buttons'] = buttons
       when 'quick_replies'
         quick_replies = new_payload['message'].delete(:quick_replies)
@@ -79,7 +79,7 @@ class Lola
       else
         model = orig_payload.dig(:data_source, :model).constantize
         obj = model.find(obj_id)
-        new_payload['message']['text'] = obj.send(new_payload['message']['text'])
+        new_payload['message']['text'] = obj_var(obj, new_payload['message']['text'])
       end
 
       puts "new_payload=#{new_payload.inspect}"
@@ -92,23 +92,35 @@ class Lola
 
   def set_elements_vars(obj, template)
     template.tap do |t|
-      t['title'] = obj.send(t['title']) if t['title']
-      t['image_url'] = obj.send(t['image_url']) if t['image_url']
-      t['subtitle'] = obj.send(t['subtitle']) if t['subtitle']
-      t['buttons'] = t['buttons'].map do |b|
-        b.tap do |b|
-          b['payload'].sub!(':id', obj.id.to_s) if b['payload']
-          b['url'] = obj.send(b['url']) if b['url']
-        end
+      puts "!!!t=#{t.inspect}"
+      t['title'] = obj_var(obj, t['title']) if t['title']
+
+      if t['image_url'] && obj_var(obj, t['image_url']) =~ URI::regexp
+        t['image_url'] = obj_var(obj, t['image_url'])
+      else
+        t.delete('image_url')
       end
+
+      t['subtitle'] = obj_var(obj, t['subtitle']) if t['subtitle']
+      t['buttons'] = t['buttons'].map do |button|
+        button.clone.tap do |b|
+          b['payload'].sub!(':id', obj.id.to_s) if b['payload']
+          b['url'] = obj_var(obj, b['url']) if b['url']
+        end
+      end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::regexp }
     end
   end
 
   def set_buttons_vars(obj, buttons)
-    buttons.map do |b|
-      b.tap do |b|
-        b['url'] = obj.send(b['url']) if b['url']
+    buttons.map do |button|
+      button.tap do |b|
+        b['url'] = obj_var(obj, b['url']) if b['url']
       end
-    end
+    end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::regexp }
+  end
+
+  def obj_var(obj, method)
+    value = obj.send(method)
+    value.present? ? value : '—'
   end
 end
