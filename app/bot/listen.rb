@@ -40,8 +40,8 @@ def contact_started?(sender)
   last_message.present? && contact_start_texts.include?(last_message)
 end
 
-def user(fb_id)
-  @user ||= user_find_or_create(fb_id)
+def fuser(fb_id = nil)
+  @user ||= user_find_or_create(fb_id).reload
 end
 
 def user_find_or_create(fb_id)
@@ -71,12 +71,12 @@ Bot.on :message do |message|
     say_lola(user(message.sender['id']), message.quick_reply)
   elsif contact_started?(message.sender)
     puts 'SAVE MESSAGE'
-    user(message.sender)
+    fuser(message.sender)
     # Send to admin
 
-    say_lola(user(message.sender['id']), 'contact_end')
+    say_lola(fuser(message.sender['id']), 'contact_end')
   else
-    say_lola(user(message.sender['id']), 'contact_start')
+    say_lola(fuser(message.sender['id']), 'contact_start')
   end
 end
 
@@ -87,13 +87,13 @@ Bot.on :postback do |postback|
 
   puts "POSTBACK: #{parsed_payload.inspect}"
 
-  say_lola(user(postback.sender['id']), postback_id)
+  say_lola(fuser(postback.sender['id']), postback_id)
 end
 
 Bot.on :message_echo do |message_echo|
   puts "ECHO: #{message_echo.inspect}"
 
-  user(message_echo.recipient['id']).add_message(message_echo.messaging)
+  fuser(message_echo.recipient['id']).add_message(message_echo.messaging)
 end
 
 def valid?(json)

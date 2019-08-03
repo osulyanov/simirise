@@ -7,6 +7,7 @@ class Lola
 
   def initialize(user, payload)
     @user = user
+    "!!Lola USER=#{user.inspect}"
     @payload = payload
     file = File.read(Rails.root.join('app', 'bot', 'bot.json'))
     @source = JSON.parse(file).with_indifferent_access
@@ -46,6 +47,7 @@ class Lola
 
     source.dig(:payloads, payload_name)
           .map { |p| process_payload(p, obj_id) }
+          .select { |p| p.present? }
           .map { |p| p.merge(recipient: { id: user.fb_id }) }
   end
 
@@ -53,40 +55,60 @@ class Lola
     if new_payload = orig_payload.dig(:template)&.clone
       case orig_payload.dig(:type)
       when 'elements'
-        elements_template = new_payload['message']['attachment']['payload'].delete(:elements)
-        model = orig_payload.dig(:data_source, :model).constantize
-        scope = orig_payload.dig(:data_source, :scope)
-        objects = model.send(scope).limit(10)
-        elements = objects.map do |obj|
-          set_elements_vars(obj, elements_template.clone)
-        end.select { |t| t['buttons'].present? }
-        new_payload['message']['attachment']['payload']['elements'] = elements
-      when 'buttons'
-        model = orig_payload.dig(:data_source, :model).constantize
-        obj = model.find(obj_id)
-        buttons = set_buttons_vars(obj, new_payload['message']['attachment']['payload']['buttons'].clone)
-        new_payload['message']['attachment']['payload']['buttons'] = buttons
-      when 'quick_replies'
-        quick_replies = new_payload['message'].delete(:quick_replies)
-        model = orig_payload.dig(:data_source, :model).constantize
-        obj = model.find(obj_id)
-        quick_replies = quick_replies.map do |qr|
-          qr.tap do |qr|
-            qr['payload'].sub! ':id', obj.id.to_s
-          end
+        if conditions_ok?(orig_payload)
+          elements_template = new_payload['message']['attachment']['payload'].delete(:elements)
+          model = orig_payload.dig(:data_source, :model).constantize
+          scope = orig_payload.dig(:data_source, :scope)
+          objects = model.send(scope).limit(10)
+          elements = objects.map do |obj|
+            set_elements_vars(obj, elements_template.clone)
+          end.select { |t| t['buttons'].present? }
+          new_payload['message']['attachment']['payload']['elements'] = elements
+        else
+          new_payload = nil
         end
-        new_payload['message']['quick_replies'] = quick_replies
+      when 'buttons'
+        if conditions_ok?(orig_payload)
+          model = orig_payload.dig(:data_source, :model).constantize
+          obj = model.find(obj_id)
+          buttons = set_buttons_vars(obj, new_payload['message']['attachment']['payload']['buttons'].clone)
+          new_payload['message']['attachment']['payload']['buttons'] = buttons
+        else
+          new_payload = nil
+        end
+      when 'quick_replies'
+        if conditions_ok?(orig_payload)
+          quick_replies = new_payload['message'].delete(:quick_replies)
+          model = orig_payload.dig(:data_source, :model).constantize
+          obj = model.find(obj_id)
+          quick_replies = quick_replies.map do |qr|
+            qr.tap do |qr|
+              qr['payload'].sub! ':id', obj.id.to_s
+            end
+          end
+          new_payload['message']['quick_replies'] = quick_replies
+        else
+          new_payload = nil
+        end
       else
-        model = orig_payload.dig(:data_source, :model).constantize
-        obj = model.find(obj_id)
-        new_payload['message']['text'] = obj_var(obj, new_payload['message']['text'])
+        if conditions_ok?(orig_payload)
+          model = orig_payload.dig(:data_source, :model).constantize
+          obj = model.find(obj_id)
+          new_payload['message']['text'] = obj_var(obj, new_payload['message']['text'])
+        else
+          new_payload = nil
+        end
       end
 
       puts "new_payload=#{new_payload.inspect}"
 
       new_payload
     else
-      orig_payload
+      if conditions_ok?(orig_payload)
+        orig_payload
+      else
+        nil
+      end
     end
   end
 
@@ -122,5 +144,12 @@ class Lola
   def obj_var(obj, method)
     value = obj.send(method)
     value.present? ? value : '—'
+  end
+
+  def conditions_ok?(orig_payload)
+    user_condition = orig_payload.dig(:user_condition)
+    return true if user_condition.blank?
+
+    @user.reload.send(user_condition)
   end
 end

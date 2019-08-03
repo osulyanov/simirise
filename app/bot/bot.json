@@ -227,6 +227,74 @@
         }
       }
     ],
+    "event_buy": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "user_condition": "approved?",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Покупка билета",
+                "buttons": [
+                  {
+                    "type": "web_url",
+                    "url": "buy_link",
+                    "title": "Перейти на Timepad",
+                    "webview_height_ratio": "full"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "user_condition": "pending?",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Модерация посетителей",
+                "buttons": [
+                  {
+                    "type": "postback",
+                    "title": "Подать заявку",
+                    "payload": "moderate"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "rejected?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "К сожалению, все билеты проданы и вы не сможете попасть на мероприятие."
+        }
+      }
+    ],
+    "moderate": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Модерация в разработке"
+        }
+      }
+    ],
     "live": [
       {
         "data_source": {
@@ -282,6 +350,11 @@
                       "type": "postback",
                       "title": "Подробнее",
                       "payload": "event_details|:id"
+                    },
+                    {
+                      "type": "postback",
+                      "title": "Купить билет",
+                      "payload": "event_buy|:id"
                     }
                   ]
                 }

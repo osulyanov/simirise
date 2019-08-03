@@ -47,6 +47,11 @@ class Event < ApplicationRecord
     "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=15" if coordinates.present?
   end
 
+  def buy_link
+    # TODO
+    "http://ya.ru/buy"
+  end
+
   def poster_image_url
     return nil unless poster_image.attached? && poster_image.image?
 
