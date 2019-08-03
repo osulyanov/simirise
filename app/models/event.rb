@@ -48,8 +48,7 @@ class Event < ApplicationRecord
   end
 
   def buy_link
-    # TODO
-    "http://ya.ru/buy"
+    "https://application.timepad.ru/event/#{timepad_id}/"
   end
 
   def poster_image_url
