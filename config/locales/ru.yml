@@ -90,6 +90,7 @@ ru:
           pending: Ожидание
           rejected: Отклонён
           approved: Подтверждён
+          inreview: На рассмотрении
         tags: Тэги
         tag_ids: Тэги
         comment: Комментарий
