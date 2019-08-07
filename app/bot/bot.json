@@ -11,8 +11,8 @@
           },
           {
             "type": "postback",
-            "title": "Назад",
-            "payload": "back"
+            "title": "Купить билет",
+            "payload": "future_events"
           },
           {
             "type": "postback",
@@ -221,6 +221,16 @@
                 "content_type": "text",
                 "title": "Условия",
                 "payload": "event_conditions|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Купить билет",
+                "payload": "event_buy|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Другие мероприятия",
+                "payload": "events"
               }
             ]
           }
