@@ -7,7 +7,7 @@ class Lola
 
   def initialize(user, payload)
     @user = user
-    "!!Lola USER=#{user.inspect}"
+    puts " > Lola USER=#{user.inspect}"
     @payload = payload
     file = File.read(Rails.root.join('app', 'bot', 'bot.json'))
     @source = JSON.parse(file).with_indifferent_access
@@ -15,7 +15,7 @@ class Lola
 
   def get_started
     payload_jsons.each do |payload_json|
-      puts "payload_json=#{payload_jsons}"
+      puts " > payload_json=#{payload_jsons}"
 
       user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
@@ -24,7 +24,7 @@ class Lola
 
   def events
     payload_jsons.each do |payload_json|
-      puts "\n\npayload_jsons=#{payload_json}"
+      puts " > \n\npayload_jsons=#{payload_json}"
 
       user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
@@ -33,7 +33,7 @@ class Lola
 
   def call_custom_action
     payload_jsons.each do |payload_json|
-      puts "payload_jsons=#{payload_json}"
+      puts " > payload_jsons=#{payload_json}"
 
       user.add_message(payload_json)
       Bot.deliver(payload_json, access_token: Rails.application.credentials.access_token)
@@ -47,7 +47,7 @@ class Lola
 
     source.dig(:payloads, payload_name)
           .map { |p| process_payload(p, obj_id) }
-          .select { |p| p.present? }
+          .select(&:present?)
           .map { |p| p.merge(recipient: { id: user.fb_id }) }
   end
 
@@ -100,24 +100,20 @@ class Lola
         end
       end
 
-      puts "new_payload=#{new_payload.inspect}"
+      puts " > new_payload=#{new_payload.inspect}"
 
       new_payload
     else
-      if conditions_ok?(orig_payload)
-        orig_payload
-      else
-        nil
-      end
+      orig_payload if conditions_ok?(orig_payload)
     end
   end
 
   def set_elements_vars(obj, template)
     template.tap do |t|
-      puts "!!!t=#{t.inspect}"
+      puts " > t=#{t.inspect}"
       t['title'] = obj_var(obj, t['title']) if t['title']
 
-      if t['image_url'] && obj_var(obj, t['image_url']) =~ URI::regexp
+      if t['image_url'] && obj_var(obj, t['image_url']) =~ URI::DEFAULT_PARSER.make_regexp
         t['image_url'] = obj_var(obj, t['image_url'])
       else
         t.delete('image_url')
@@ -129,7 +125,7 @@ class Lola
           b['payload'].sub!(':id', obj.id.to_s) if b['payload']
           b['url'] = obj_var(obj, b['url']) if b['url']
         end
-      end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::regexp }
+      end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::DEFAULT_PARSER.make_regexp }
     end
   end
 
@@ -138,7 +134,7 @@ class Lola
       button.tap do |b|
         b['url'] = obj_var(obj, b['url']) if b['url']
       end
-    end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::regexp }
+    end.select { |b| b['type'] != 'web_url' || b['url'] =~ URI::DEFAULT_PARSER.make_regexp }
   end
 
   def obj_var(obj, method)
