@@ -118,6 +118,34 @@
             "text": "description_html"
           }
         }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
       }
     ],
     "event_performances": [
@@ -130,6 +158,34 @@
           "message": {
             "text": "performances_text"
           }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
         }
       }
     ],
@@ -144,6 +200,34 @@
             "text": "line_ups_text"
           }
         }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
       }
     ],
     "event_conditions": [
@@ -156,6 +240,34 @@
           "message": {
             "text": "conditions"
           }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
         }
       }
     ],
@@ -183,6 +295,34 @@
               }
             }
           }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
         }
       }
     ],
