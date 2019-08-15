@@ -102,6 +102,7 @@ ActiveAdmin.register Event do
       f.input :description_html
       f.input :coordinates
       f.input :fb_link
+      f.input :report_url
       f.input :conditions
       f.input :access_status, collection: enum_options_for_select(Event, :access_status)
       f.input :poster_image, as: :file, image_preview: true, input_html: { direct_upload: true }

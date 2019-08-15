@@ -22,18 +22,59 @@ class Event < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: :all_blank
 
-  scope :future, -> do
-    where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
-          starts: Date.today.beginning_of_day,
-          ends: Date.today.end_of_day
+  scope :future, lambda {
+    order(starts_at: :desc)
+      .where '(starts_at >= :starts AND ends_at IS NULL) OR ends_at >= :ends',
+             starts: Date.today.beginning_of_day,
+             ends: Date.today.end_of_day
+  }
+  scope :past, lambda {
+    order(starts_at: :desc)
+      .where '(starts_at < :starts AND ends_at IS NULL) OR ends_at < :ends',
+             starts: Date.today.end_of_day,
+             ends: Date.today.end_of_day
+  }
+
+  def self.live
+    [future.first] || [last]
   end
 
   def full_address
     [city, address].select(&:present?).join ', ' || 'Карта'
   end
 
+  def correct_coordinates
+    coordinates
+      .split(',')
+      .map(&:to_f)
+      .reverse
+      .join(',')
+  end
+
   def map_link
-    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=15" if coordinates.present?
+    return nil unless coordinates.present?
+
+    escaped_coordinates = CGI.escape(correct_coordinates)
+    "https://yandex.ru/maps/?mode=search&sll=#{escaped_coordinates}&text=#{escaped_coordinates}&z=13"
+  end
+
+  def buy_link
+    "https://application.timepad.ru/event/#{timepad_id}/"
+  end
+
+  def poster_image_url
+    return nil unless poster_image.attached? && poster_image.image?
+
+    variant = poster_image.variant(combine_options: { resize: '300x300>' })
+    Rails.application.routes.url_helpers.rails_representation_url(variant)
+  end
+
+  def performances_text
+    performances.map { |p| "*#{p.name}*\n#{p.description}" }.join("\n\n")
+  end
+
+  def line_ups_text
+    line_ups.map { |p| "*#{p.name}*\n`#{p.timing}`\n#{p.description}" }.join("\n\n")
   end
 end
 
@@ -53,6 +94,7 @@ end
 #  moderation_status   :integer          default("not_moderated"), not null
 #  name                :string
 #  questions           :jsonb            not null
+#  report_url          :string
 #  starts_at           :datetime
 #  timepad_description :text
 #  created_at          :datetime         not null

@@ -90,6 +90,7 @@ ru:
           pending: Ожидание
           rejected: Отклонён
           approved: Подтверждён
+          inreview: На рассмотрении
         tags: Тэги
         tag_ids: Тэги
         comment: Комментарий
@@ -103,6 +104,7 @@ ru:
         created_at: Создан
         updated_at: Изменён
         fb_link: Ссылка на FB
+        report_url: Ссылка на отчёт
         starts_at: Дата начала события
         ends_at: Дата окончания события
         description_short: Краткое описание/подзаголовок события

@@ -4,7 +4,7 @@ class UsersEmailCitext < ActiveRecord::Migration[5.2]
   def up
     enable_extension('citext')
     change_column :users, :email, :citext
-    add_index :users ,:email
+    add_index :users, :email
   end
 
   def down

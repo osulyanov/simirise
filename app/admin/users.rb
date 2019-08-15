@@ -60,7 +60,7 @@ ActiveAdmin.register User do
         column('Название мероприятия') { |t| t.order.event.name }
         column('Статус заказа') { |t| t.order.status['title'] }
         column('Дата оплаты') { |t| l(t.order.payment['paid_at'].to_time, format: :long) if t.order.payment['paid_at'] }
-        column('Сумма оплаты') { |t| t.price_nominal }
+        column('Сумма оплаты', &:price_nominal)
         column('Промокод') { |t| t.order.promocodes&.uniq }
       end
     end

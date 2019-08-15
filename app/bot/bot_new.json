@@ -1,0 +1,267 @@
+{
+  "profile": {
+    "persistent_menu": [
+      {
+        "locale": "default",
+        "composer_input_disabled": true,
+        "call_to_actions": [
+          {
+            "type": "postback",
+            "title": "В основное меню",
+            "payload": "get_started"
+          },
+          {
+            "type": "postback",
+            "title": "Назад",
+            "payload": "back"
+          },
+          {
+            "type": "postback",
+            "title": "Связаться с нами",
+            "payload": "contact_start"
+          }
+        ]
+      }
+    ],
+    "get_started": {
+      "payload": "get_started"
+    },
+    "greeting": [
+      {
+        "locale": "default",
+        "text": "Хей {{user_full_name}}! Это Rise Entertainment Bot"
+      }
+    ]
+  },
+  "payloads": {
+    "get_started": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "back": [
+      {
+        "composer_input_disabled": false,
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Назад в разработке"
+        }
+      }
+    ],
+    "events": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Какие?",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Будущие",
+              "payload": "future_events"
+            },
+            {
+              "content_type": "text",
+              "title": "Прошедшие",
+              "payload": "past_events"
+            }
+          ]
+        }
+      }
+    ],
+    "contact_start": [
+      {
+        "composer_input_disabled": false,
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Хотите задать вопрос? Напишите свой вопрос оператору сейчас!"
+        }
+      }
+    ],
+    "contact_end": [
+      {
+        "composer_input_disabled": true,
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
+        }
+      }
+    ],
+    "event_description": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "description_html"
+          }
+        }
+      }
+    ],
+    "event_performances": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "performances_text"
+          }
+        }
+      }
+    ],
+    "event_line_ups": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "line_ups_text"
+          }
+        }
+      }
+    ],
+    "event_conditions": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "conditions"
+          }
+        }
+      }
+    ],
+    "event_location": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Место проведения мероприятия",
+                "buttons": [
+                  {
+                    "type": "web_url",
+                    "url": "map_link",
+                    "title": "Показать карту",
+                    "webview_height_ratio": "full"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ],
+    "event_details": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "quick_replies",
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "Подробнее о мероприятии",
+            "quick_replies": [
+              {
+                "content_type": "text",
+                "title": "Описание мероприятия",
+                "payload": "event_description|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Расписание перфомансов",
+                "payload": "event_performances|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Line-up",
+                "payload": "event_line_ups|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Место проведения мероприятия",
+                "payload": "event_location|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Условия",
+                "payload": "event_conditions|:id"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "live": [
+      {
+        "data_source": {
+          "model": "Event",
+          "scope": "live"
+        },
+        "type": "elements",
+        "template": {
+          "message": {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "sharable": "true",
+                "elements": {
+                  "title": "name",
+                  "image_url": "poster_image_url",
+                  "subtitle": "description_short",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Подробнее",
+                      "payload": "event_details|:id"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
