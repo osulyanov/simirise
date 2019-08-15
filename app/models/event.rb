@@ -43,8 +43,19 @@ class Event < ApplicationRecord
     [city, address].select(&:present?).join ', ' || 'Карта'
   end
 
+  def correct_coordinates
+    coordinates
+      .split(',')
+      .map(&:to_f)
+      .reverse
+      .join(',')
+  end
+
   def map_link
-    "https://yandex.ru/maps/213/moscow/?ll=#{CGI.escape(coordinates)}&z=15" if coordinates.present?
+    return nil unless coordinates.present?
+
+    escaped_coordinates = CGI.escape(correct_coordinates)
+    "https://yandex.ru/maps/?mode=search&sll=#{escaped_coordinates}&text=#{escaped_coordinates}&z=13"
   end
 
   def buy_link
