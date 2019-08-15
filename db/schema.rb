@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_18_194342) do
+ActiveRecord::Schema.define(version: 2019_08_03_140245) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -84,6 +85,8 @@ ActiveRecord::Schema.define(version: 2019_05_18_194342) do
     t.jsonb "location", default: {}, null: false
     t.jsonb "questions", default: [], null: false
     t.integer "moderation_status", default: 0, null: false
+    t.text "timepad_description"
+    t.string "report_url"
   end
 
   create_table "line_ups", force: :cascade do |t|
@@ -108,7 +111,9 @@ ActiveRecord::Schema.define(version: 2019_05_18_194342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "answers"
+    t.datetime "imported_at"
     t.index ["event_id"], name: "index_orders_on_event_id"
+    t.index ["imported_at"], name: "index_orders_on_imported_at"
   end
 
   create_table "performances", force: :cascade do |t|
@@ -180,13 +185,17 @@ ActiveRecord::Schema.define(version: 2019_05_18_194342) do
     t.jsonb "codes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.datetime "imported_at"
+    t.index ["imported_at"], name: "index_tickets_on_imported_at"
     t.index ["order_id"], name: "index_tickets_on_order_id"
     t.index ["ticket_type_id"], name: "index_tickets_on_ticket_type_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.citext "email"
     t.date "birth_date"
     t.string "fb_link"
     t.string "phone"
@@ -194,6 +203,14 @@ ActiveRecord::Schema.define(version: 2019_05_18_194342) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "answers"
+    t.string "source"
+    t.string "fb_id"
+    t.jsonb "messages"
+    t.string "sms_code"
+    t.datetime "smsed_at"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["fb_id"], name: "index_users_on_fb_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -1,0 +1,666 @@
+{
+  "profile": {
+    "persistent_menu": [
+      {
+        "locale": "default",
+        "call_to_actions": [
+          {
+            "type": "postback",
+            "title": "В основное меню",
+            "payload": "get_started"
+          },
+          {
+            "type": "postback",
+            "title": "Купить билет",
+            "payload": "future_events"
+          },
+          {
+            "type": "postback",
+            "title": "Связаться с нами",
+            "payload": "contact_start"
+          }
+        ]
+      }
+    ],
+    "get_started": {
+      "payload": "get_started"
+    },
+    "greeting": [
+      {
+        "locale": "default",
+        "text": "Хей {{user_full_name}}! Это Rise Entertainment Bot"
+      }
+    ]
+  },
+  "payloads": {
+    "get_started": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "back": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Назад в разработке"
+        }
+      }
+    ],
+    "events": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Какие?",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Будущие",
+              "payload": "future_events"
+            },
+            {
+              "content_type": "text",
+              "title": "Прошедшие",
+              "payload": "past_events"
+            }
+          ]
+        }
+      }
+    ],
+    "contact_start": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Хотите задать вопрос? Напишите свой вопрос оператору сейчас!"
+        }
+      }
+    ],
+    "contact_end": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Мы получили ваш вопрос, спасибо! Скоро мы вам ответим!"
+        }
+      }
+    ],
+    "event_description": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "description_html"
+          }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "event_performances": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "performances_text"
+          }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "event_line_ups": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "line_ups_text"
+          }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "event_conditions": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "conditions"
+          }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "event_location": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Место проведения мероприятия",
+                "buttons": [
+                  {
+                    "type": "web_url",
+                    "url": "map_link",
+                    "title": "Показать карту",
+                    "webview_height_ratio": "tall"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "👋🏻",
+          "quick_replies": [
+            {
+              "content_type": "text",
+              "title": "Мероприятия",
+              "payload": "events"
+            },
+            {
+              "content_type": "text",
+              "title": "Связаться с нами",
+              "payload": "contact_start"
+            },
+            {
+              "content_type": "text",
+              "title": "Статус модерации",
+              "payload": "status"
+            },
+            {
+              "content_type": "text",
+              "title": "Live",
+              "payload": "live"
+            }
+          ]
+        }
+      }
+    ],
+    "event_details": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "quick_replies",
+        "template": {
+          "messaging_type": "RESPONSE",
+          "message": {
+            "text": "Подробнее о мероприятии",
+            "quick_replies": [
+              {
+                "content_type": "text",
+                "title": "Описание мероприятия",
+                "payload": "event_description|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Расписание перфомансов",
+                "payload": "event_performances|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Line-up",
+                "payload": "event_line_ups|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Место проведения мероприятия",
+                "payload": "event_location|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Условия",
+                "payload": "event_conditions|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Купить билет",
+                "payload": "event_buy|:id"
+              },
+              {
+                "content_type": "text",
+                "title": "Другие мероприятия",
+                "payload": "events"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "event_buy": [
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "user_condition": "approved?",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Покупка билета",
+                "buttons": [
+                  {
+                    "type": "web_url",
+                    "url": "buy_link",
+                    "title": "Перейти на Timepad",
+                    "webview_height_ratio": "full"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "data_source": {
+          "model": "Event"
+        },
+        "type": "buttons",
+        "user_condition": "pending?",
+        "template": {
+          "message":{
+            "attachment":{
+              "type": "template",
+              "payload":{
+                "template_type": "button",
+                "text": "Модерация посетителей",
+                "buttons": [
+                  {
+                    "type": "postback",
+                    "title": "Подать заявку",
+                    "payload": "moderate"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "rejected?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "К сожалению, все билеты проданы и вы не сможете попасть на мероприятие."
+        }
+      },
+      {
+        "user_condition": "inreview?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Ваш профиль рассматривается модератором"
+        }
+      }
+    ],
+    "status": [
+      {
+        "user_condition": "approved?",
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Вы в клане! Можете покупать билет, будем рады вас видеть!",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Купить билет",
+                  "payload": "future_events"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "pending?",
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Модерация",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Подать заявку",
+                  "payload": "moderate"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "user_condition": "rejected?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "К сожалению, вы не сможете попасть на мероприятие."
+        }
+      },
+      {
+        "user_condition": "inreview?",
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Ваш профиль рассматривается модератором"
+        }
+      }
+    ],
+    "moderate": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Отправьте ваш номер телефона"
+        }
+      }
+    ],
+    "sms_check": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Введите код из СМС"
+        }
+      }
+    ],
+    "sms_resend": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Введите код из СМС."
+        }
+      }
+    ],
+    "sms_wrong": [
+      {
+        "message":{
+          "attachment":{
+            "type": "template",
+            "payload":{
+              "template_type": "button",
+              "text": "Неверный код",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Связаться с оператором",
+                  "payload": "contact_start"
+                },
+                {
+                  "type": "postback",
+                  "title": "Отправить СМС повторно",
+                  "payload": "sms_resend"
+                },
+                {
+                  "type": "postback",
+                  "title": "Изменить номер телефона",
+                  "payload": "moderate"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "wait": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "Заявка подана, ожидайте ответа модерации!"
+        }
+      }
+    ],
+    "live": [
+      {
+        "data_source": {
+          "model": "Event",
+          "scope": "live"
+        },
+        "type": "elements",
+        "template": {
+          "message": {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "sharable": "true",
+                "elements": {
+                  "title": "name",
+                  "image_url": "poster_image_url",
+                  "subtitle": "description_short",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Подробнее",
+                      "payload": "event_details|:id"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "future_events": [
+      {
+        "data_source": {
+          "model": "Event",
+          "scope": "future"
+        },
+        "type": "elements",
+        "template": {
+          "message": {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "sharable": "true",
+                "elements": {
+                  "title": "name",
+                  "image_url": "poster_image_url",
+                  "subtitle": "description_short",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Подробнее",
+                      "payload": "event_details|:id"
+                    },
+                    {
+                      "type": "postback",
+                      "title": "Купить билет",
+                      "payload": "event_buy|:id"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "past_events": [
+      {
+        "data_source": {
+          "model": "Event",
+          "scope": "past"
+        },
+        "type": "elements",
+        "template": {
+          "message": {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "sharable": "true",
+                "elements": {
+                  "title": "name",
+                  "image_url": "poster_image_url",
+                  "subtitle": "description_short",
+                  "buttons": [
+                    {
+                      "type": "web_url",
+                      "title": "Отчёт о мероприятии",
+                      "url": "report_url",
+                      "webview_height_ratio": "full"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

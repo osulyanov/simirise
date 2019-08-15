@@ -45,6 +45,11 @@ ru:
         few: настройки
         many: настройки
         other: Настройки
+      ticket_type:
+        one: тип билета
+        few: типа билеты
+        many: типов билетов
+        other: Типы билетов
     attributes:
       admin_user:
         id: ID
@@ -85,6 +90,7 @@ ru:
           pending: Ожидание
           rejected: Отклонён
           approved: Подтверждён
+          inreview: На рассмотрении
         tags: Тэги
         tag_ids: Тэги
         comment: Комментарий
@@ -94,9 +100,11 @@ ru:
         id: ID
         name: Название мероприятия
         timepad_id: ID мероприятия в Timepad
+        timepad_description: Описание из Timepad
         created_at: Создан
         updated_at: Изменён
         fb_link: Ссылка на FB
+        report_url: Ссылка на отчёт
         starts_at: Дата начала события
         ends_at: Дата окончания события
         description_short: Краткое описание/подзаголовок события
@@ -139,3 +147,27 @@ ru:
       setting:
         timepad_token: Токен Timepad
         organization_id: ID организации на Timapad
+      ticket_type:
+        id: ID
+        name: Название
+        created_at: Создан
+        updated_at: Изменён
+        description: Описание
+        ad_partner_profit:
+        attended:
+        buy_amount_max:
+        buy_amount_min:
+        is_active: Активен
+        is_promocode_locked:
+        limit: Лимит
+        price: Цена
+        public_key:
+        remaining: Осталось
+        sale_ends_at:
+        sale_starts_at:
+        send_personal_links:
+        sold:
+        status: Статус
+        event: Событие
+        event_id: Событие
+        timepad_id: ID в Timepad

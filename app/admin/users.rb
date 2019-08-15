@@ -2,6 +2,7 @@
 
 ActiveAdmin.register User do
   menu priority: 1
+  includes :tags, :tickets
 
   scope :all, default: true
   User.states.keys.each do |state|
@@ -12,11 +13,12 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :name
-    column(:age) { |u| age(u.birth_date) }
     column(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
     column :phone
     column :email
     my_tag_column :state, interactive: true
+    column(:tags) { |u| u.tags.map(&:name).join(', ') }
+    column('Количество билетов') { |u| u.tickets.size }
     actions
   end
 
@@ -27,6 +29,7 @@ ActiveAdmin.register User do
   filter :state
   filter :tags
   filter :comment
+  filter :event_id_in, as: :select, collection: Event.all
 
   sidebar I18n.t('activerecord.attributes.user.photo'), only: :show do
     attributes_table_for user do
@@ -43,10 +46,24 @@ ActiveAdmin.register User do
       row :phone
       my_tag_row :state
       row(:fb_link) { |u| link_to(u.fb_link, u.fb_link) if u.fb_link.present? }
+      row(:tags) { |u| u.tags.map(&:name).join ', ' }
       row :email
+      row :answers
     end
-    # TODO: Tickets
+
     active_admin_comments
+
+    panel 'Билеты' do
+      table_for user.tickets do
+        column :id
+        column('Имя гостя') { |t| [t.answers['name'], t.answers['surname']].join(' ') }
+        column('Название мероприятия') { |t| t.order.event.name }
+        column('Статус заказа') { |t| t.order.status['title'] }
+        column('Дата оплаты') { |t| l(t.order.payment['paid_at'].to_time, format: :long) if t.order.payment['paid_at'] }
+        column('Сумма оплаты', &:price_nominal)
+        column('Промокод') { |t| t.order.promocodes&.uniq }
+      end
+    end
   end
 
   form do |f|
@@ -54,7 +71,7 @@ ActiveAdmin.register User do
       f.semantic_errors(*f.object.errors.keys)
       f.input :photo, as: :file, image_preview: true, input_html: { direct_upload: true }
       f.input :name
-      f.input :email
+      f.input :email, as: :string
       f.input :phone
       f.input :birth_date, as: :date_time_picker, picker_options: { timepicker: false,
                                                                     min_date: Date.today - 100.years,

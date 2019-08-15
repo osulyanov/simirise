@@ -2,6 +2,9 @@
 
 class Ticket < ApplicationRecord
   belongs_to :order
+  belongs_to :user
+  belongs_to :ticket_type, primary_key: :timepad_id,
+                           optional: true
 end
 
 # == Schema Information
@@ -12,6 +15,7 @@ end
 #  answers        :jsonb
 #  attendance     :jsonb
 #  codes          :jsonb
+#  imported_at    :datetime
 #  number         :string
 #  place          :jsonb
 #  price_nominal  :integer
@@ -20,9 +24,12 @@ end
 #  order_id       :bigint(8)
 #  ticket_type_id :bigint(8)
 #  timepad_id     :integer
+#  user_id        :integer
 #
 # Indexes
 #
+#  index_tickets_on_imported_at     (imported_at)
 #  index_tickets_on_order_id        (order_id)
 #  index_tickets_on_ticket_type_id  (ticket_type_id)
+#  index_tickets_on_user_id         (user_id)
 #
