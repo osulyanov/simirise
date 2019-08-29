@@ -29,7 +29,7 @@ class User < ApplicationRecord
   def send_sms_code(phone = nil)
     phone ||= self.phone
     code = Random.new.rand(100_000..999_999).to_s
-    # TODO: SmsRu.sms.send(to: phone, text: "Код подтверждения #{code}")
+    Devino.new.sms phone, "Код подтверждения #{code}"
     update_attributes phone: phone,
                       sms_code: code,
                       smsed_at: Time.zone.now
