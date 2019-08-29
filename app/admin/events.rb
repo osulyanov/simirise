@@ -24,9 +24,17 @@ ActiveAdmin.register Event do
     column(:tickets_sold) do |e|
       "#{Ticket.where(order: e.orders.not_free).size} / #{Ticket.where(order: e.orders.free).size}"
     end
-    column(:summ) { |e| number_to_currency(e.orders.paid.sum { |o| o.payment.dig('amount') }, unit: '₽').gsub(' ', '&nbsp').html_safe }
-    column('Посмотреть список покупателей') { |e| link_to 'Посмотреть список покупателей', admin_users_path(q: { event_id_in: e.id }, order: :id_desc) }
-    column('Посмотреть ожидающих модерацию') { |e| link_to 'Посмотреть ожидающих модерацию', admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie) }
+    column(:summ) do |e|
+      number_to_currency(e.orders.paid.sum { |o| o.payment.dig('amount') }, unit: '₽').gsub(' ', '&nbsp').html_safe
+    end
+    column('Посмотреть список покупателей') do |e|
+      link_to 'Посмотреть список покупателей',
+              admin_users_path(q: { event_id_in: e.id }, order: :id_desc)
+    end
+    column('Посмотреть ожидающих модерацию') do |e|
+      link_to 'Посмотреть ожидающих модерацию',
+              admin_users_path(q: { event_id_in: e.id }, order: :id_desc, scope: :ozhidanie)
+    end
     actions do |event|
       link_to('Заказы.CSV', orders_csv_admin_event_path(event, format: :csv))
     end
@@ -41,7 +49,9 @@ ActiveAdmin.register Event do
   sidebar I18n.t('activerecord.attributes.user.photo'), only: :show do
     attributes_table_for event do
       row(' ') do |e|
-        link_to(image_tag(e.poster_image.variant(resize: '300x300>', auto_orient: true)), e.poster_image) if e.poster_image.attached?
+        if e.poster_image.attached?
+          link_to(image_tag(e.poster_image.variant(resize: '300x300>', auto_orient: true)), e.poster_image)
+        end
       end
       row :description_short
       row :description_html

@@ -42,7 +42,9 @@ class Listener
     last_message = fuser(sender['id']).messages&.last&.dig('message', 'text')
 
     payload_texts = if question_payloads.is_a?(Array)
-                      question_payloads.flat_map { |question_payloads| @source.dig(:payloads, question_payloads).map { |c| c.dig(:message, :text) } }
+                      question_payloads.flat_map do |question_payloads|
+                        @source.dig(:payloads, question_payloads).map { |c| c.dig(:message, :text) }
+                      end
                     else
                       @source.dig(:payloads, question_payloads).map { |c| c.dig(:message, :text) }
                     end

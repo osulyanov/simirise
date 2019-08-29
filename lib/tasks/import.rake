@@ -93,7 +93,9 @@ namespace :import do
     User.find_or_initialize_by(email: answers.delete('mail')).tap do |user|
       user.name = [answers.delete('name'), answers.delete('surname')].join(' ')
       user.phone = answers.delete('phone')
-      user.answers = (user.answers.is_a?(Hash) ? user.answers : {}).merge(named_answers(answers, ticket.order.event)).uniq
+      user.answers = (user.answers.is_a?(Hash) ? user.answers : {})
+                     .merge(named_answers(answers, ticket.order.event))
+                     .uniq
       user.state = :approved if %w[ok paid].include?(ticket.order.status['name'])
       user.state = :rejected if %w[rejected inactive].include?(ticket.order.status['name'])
       user.save!
