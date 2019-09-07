@@ -3,7 +3,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  Rails.application.routes.default_url_options = { host: 'botmode.io' }
+  config.domain = 'rise.sulyanov.com'
+  config.protocol = 'https'
+  config.host = [config.protocol, '://', config.domain].join
+  config.action_controller.asset_host = config.host
+
+  Rails.application.routes.default_url_options = { host: config.domain }
+  Rails.application.routes.default_url_options[:protocol] = config.protocol
 
   # Code is not reloaded between requests.
   config.cache_classes = true
