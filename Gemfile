@@ -8,7 +8,7 @@ ruby '2.5.4'
 gem 'activeadmin', github: 'activeadmin/activeadmin'
 gem 'activeadmin_addons', github: 'platanus/activeadmin_addons'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'cancancan', '~> 2.0'
+gem 'cancancan', '~> 3.0'
 gem 'devise', '> 4.x'
 gem 'facebook-messenger'
 gem 'httparty'
