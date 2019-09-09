@@ -27,7 +27,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'rb-readline'
 
-  gem 'capistrano', '~> 3.8'
+  gem 'capistrano', '~> 3.11'
   gem 'capistrano-bundler', '~> 1.2'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rbenv', '~> 2.0'
