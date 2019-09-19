@@ -53,6 +53,7 @@ class Listener
   end
 
   def self.fuser(fb_id = nil)
+    fb_id = fb_id.is_a?(Hash) ? fb_id['id'] : fb_id
     Rails.logger.info "> self.fuser(#{fb_id})"
     @users[fb_id] ||= user_find_or_create(fb_id).reload
   end
