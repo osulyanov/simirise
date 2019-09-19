@@ -59,7 +59,8 @@ class Lola
           elements_template = new_payload['message']['attachment']['payload'].delete(:elements)
           model = orig_payload.dig(:data_source, :model).constantize
           scope = orig_payload.dig(:data_source, :scope)
-          objects = model.send(scope).limit(10)
+          objects = model.send(scope)
+          objects = objects.is_a?(Array) ? objects[0...10] : objects.limit(10)
           elements = objects.map do |obj|
             set_elements_vars(obj, elements_template.clone)
           end.select { |t| t['buttons'].present? }
