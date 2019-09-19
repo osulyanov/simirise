@@ -23,7 +23,15 @@ class Devino
     req
   end
 
+  def balance
+    @options[:query] = {
+      SessionId: token
+    }
+    self.class.get('/User/Balance', @options).parsed_response
+  end
+
   def sms(to, text)
+    Rails.logger.info "> Devino balance #{balance}"
     @options[:query] = {
       SessionId: token,
       DestinationAddress: to,
