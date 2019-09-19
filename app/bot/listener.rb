@@ -131,4 +131,7 @@ class Listener
   rescue StandardError
     false
   end
+rescue StandardError => e
+  Rails.logger.info ">ERROR: #{e.inspect}"
+  say_lola(fuser(message.sender['id']), 'fallback')
 end

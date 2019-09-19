@@ -107,6 +107,14 @@
         }
       }
     ],
+    "fallback": [
+      {
+        "messaging_type": "RESPONSE",
+        "message": {
+          "text": "…"
+        }
+      }
+    ],
     "event_description": [
       {
         "data_source": {
