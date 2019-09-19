@@ -53,10 +53,12 @@ class Listener
   end
 
   def self.fuser(fb_id = nil)
+    Rails.logger.info "> self.fuser(#{fb_id})"
     @users[fb_id] ||= user_find_or_create(fb_id).reload
   end
 
   def self.user_find_or_create(fb_id)
+    Rails.logger.info "> self.user_find_or_create(#{fb_id})"
     User.find_or_initialize_by(fb_id: fb_id).tap do |u|
       unless u.persisted?
         u.source = 'messenger'
@@ -77,23 +79,23 @@ class Listener
   end
 
   Bot.on :message do |message|
-    puts " > MESSAGE: #{message.text} /// #{message.quick_reply} /// #{message.attachments}"
+    Rails.logger.info " > MESSAGE: #{message.text} /// #{message.quick_reply} /// #{message.attachments}"
 
     if message.quick_reply
       say_lola(fuser(message.sender['id']), message.quick_reply)
     elsif asked?(message.sender, :contact_start)
-      puts ' > SAVE MESSAGE'
+      Rails.logger.info ' > SAVE MESSAGE'
       fuser(message.sender)
       # Send to admin
 
       say_lola(fuser(message.sender['id']), 'contact_end')
     elsif asked?(message.sender, :moderate)
-      puts ' > SEND SMS'
+      Rails.logger.info ' > SEND SMS'
       fuser(message.sender).send_sms_code(message.text)
 
       say_lola(fuser(message.sender['id']), 'sms_check')
     elsif asked?(message.sender, %i[sms_check sms_resend])
-      puts ' > CHECK SMS'
+      Rails.logger.info ' > CHECK SMS'
       if fuser(message.sender).sms_code == message.text
         fuser(message.sender['id']).inreview!
         say_lola(fuser(message.sender['id']), 'wait')
@@ -110,7 +112,7 @@ class Listener
     parsed_payload = valid?(payload) ? JSON.parse(payload) : payload
     postback_id = parsed_payload && parsed_payload['id'] ? parsed_payload['id'] : parsed_payload
 
-    puts " > POSTBACK: #{parsed_payload.inspect}"
+    Rails.logger.info " > POSTBACK: #{parsed_payload.inspect}"
 
     fuser(postback.sender['id']).send_sms_code if postback_id == 'sms_resend'
 
@@ -118,7 +120,7 @@ class Listener
   end
 
   Bot.on :message_echo do |message_echo|
-    puts " > ECHO: #{message_echo.inspect}"
+    Rails.logger.info " > ECHO: #{message_echo.inspect}"
 
     fuser(message_echo.recipient['id']).add_message(message_echo.messaging)
   end
