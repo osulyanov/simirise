@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_140245) do
+ActiveRecord::Schema.define(version: 2019_11_23_110035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2019_08_03_140245) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.datetime "imported_at"
+    t.string "eticket_link"
     t.index ["imported_at"], name: "index_tickets_on_imported_at"
     t.index ["order_id"], name: "index_tickets_on_order_id"
     t.index ["ticket_type_id"], name: "index_tickets_on_ticket_type_id"

@@ -15,6 +15,7 @@ end
 #  answers        :jsonb
 #  attendance     :jsonb
 #  codes          :jsonb
+#  eticket_link   :string
 #  imported_at    :datetime
 #  number         :string
 #  place          :jsonb
